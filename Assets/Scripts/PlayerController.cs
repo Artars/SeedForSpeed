@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float maxSpeed = 400f;
-    public float defaultAcceleration = 8f;
-    public float brakeAcceleration = 16f;
-    public float frictionAcceleration = 4f;
+    public float reversedMaxSpeed = 200f;
+    public float defaultAcceleration = 4f;
+    public float brakeAcceleration = 6f;
+    public float frictionAcceleration = 2f;
     public float collisionAcceleration = 800f;
     public float turnAngle = 80f;
     public float driftBuff = 30f;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public bool shouldMove = true;
     public bool forDebug = false;
     private bool haveCollided = false;
+    private bool isReversed = false;
     int accelerator;
     int brake;
     float turn;
@@ -33,6 +35,26 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(collisionStop());
     }
 
+    public void acceleratorOn(){
+        accelerator = 1;
+    }
+
+    public void brakeOn(){
+        brake = 1;
+    }
+
+    public void reverseOn(){
+        isReversed = true;
+        brake = 1;
+    }
+
+    public void turnLeft(float input){
+        turn = -Mathf.Abs(input);
+    }
+    public void turnRight(float input){
+        turn = Mathf.Abs(input);
+    }
+
     void Start()
     {
         bodyPosition = transform;
@@ -45,34 +67,33 @@ public class PlayerController : MonoBehaviour
         brake = 0;
         turn = 0;
         if (!forDebug){
-            if (Input.GetButton("Fire1"))
-            {
-                accelerator = 1;
-            }
-            if (Input.GetButton("Fire2"))
-            {
-                brake = 1;
-            }
-            turn = Input.GetAxis("Horizontal");
+            if (Input.GetButton("Fire1")) acceleratorOn();
+            if (Input.GetButton("Fire2")) brakeOn();
+            if (Input.GetButtonDown("Fire2") && accelerator == 0 && speed < 10) reverseOn();
+            float aux = Input.GetAxis("Horizontal");
+            if (aux>0) turnRight(aux);
+            else if (aux<0) turnLeft(aux);
+            if (brake == 0 && speed > -10) isReversed = false;
         }
 
-        isDrifting = (accelerator == 1 && brake == 1);
-        if (!isDrifting){
-            if (!haveCollided){
-                if (accelerator == 1) speed += defaultAcceleration;
-                if (speed > 0f){
-                    if (accelerator == 0) speed -= frictionAcceleration;
-                    else if (brake == 1) speed -= brakeAcceleration;
-                }
-                else if (speed < 0f && (accelerator == 0 || brake == 1)) speed = 0;
-                if (speed > maxSpeed) speed = maxSpeed;
-                if (speed < -maxSpeed/2) speed = -maxSpeed/2;
+        isDrifting = (accelerator == 1 && brake == 1 && speed > 10);
+        if (!isDrifting && !isReversed && !haveCollided){
+            if (accelerator == 1) speed += defaultAcceleration;
+            if (speed > 0f){
+                if (brake == 1) speed -= brakeAcceleration;
+                else if (accelerator == 0) speed -= frictionAcceleration;
             }
-            else if (body.velocity.magnitude == 0) {
-                haveCollided = false;
-                shouldMove = true;
-                speed = 0;
+            if (speed < 0f && (accelerator == 0 || brake == 1)) speed = 0;
+            if (speed > maxSpeed) speed = maxSpeed;
+        }
+        else if(isReversed && !haveCollided){
+            if (brake == 1) speed -= defaultAcceleration;
+            if (speed < 0f){
+                if (accelerator == 1) speed += brakeAcceleration;
+                else if (brake == 0) speed += frictionAcceleration;
             }
+            if (speed > 0f && (brake == 0 || accelerator == 1)) speed = 0;
+            if (speed < -reversedMaxSpeed) speed = -reversedMaxSpeed;
         }
     }
 
@@ -93,6 +114,8 @@ public class PlayerController : MonoBehaviour
             if(body.velocity.magnitude <= 10) {
                 haveCollided = false;
                 shouldMove = true;
+                isReversed = false;
+                speed = 0;
             }
             yield return null;
         }

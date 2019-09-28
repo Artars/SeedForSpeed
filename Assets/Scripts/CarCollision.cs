@@ -13,7 +13,6 @@ public class CarCollision : MonoBehaviour
             Rigidbody body2 = contact.otherCollider.GetComponent<Rigidbody>();
             float speed1 = GetComponent<VelocityEstimator>().speed.magnitude;
             float speed2 = contact.otherCollider.GetComponent<VelocityEstimator>().speed.magnitude;
-            // Debug.Log("Foi1 speed1="+speed1+" speed2="+speed2);
 
             if (speed1 > speed2){
                 PlayerController player2 = contact.otherCollider.GetComponent<PlayerController>();

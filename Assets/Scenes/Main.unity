@@ -1551,6 +1551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 500
+  reversedMaxSpeed: 200
   defaultAcceleration: 10
   brakeAcceleration: 20
   frictionAcceleration: 3
@@ -4190,6 +4191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 500
+  reversedMaxSpeed: 200
   defaultAcceleration: 10
   brakeAcceleration: 20
   frictionAcceleration: 3
@@ -4492,6 +4494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 500
+  reversedMaxSpeed: 200
   defaultAcceleration: 10
   brakeAcceleration: 20
   frictionAcceleration: 3
@@ -5721,6 +5724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 500
+  reversedMaxSpeed: 200
   defaultAcceleration: 10
   brakeAcceleration: 20
   frictionAcceleration: 3
@@ -7195,6 +7199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 500
+  reversedMaxSpeed: 200
   defaultAcceleration: 10
   brakeAcceleration: 20
   frictionAcceleration: 3
@@ -7723,6 +7728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 500
+  reversedMaxSpeed: 200
   defaultAcceleration: 10
   brakeAcceleration: 20
   frictionAcceleration: 3
@@ -8111,9 +8117,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 400
-  defaultAcceleration: 8
-  brakeAcceleration: 16
-  frictionAcceleration: 4
+  reversedMaxSpeed: 200
+  defaultAcceleration: 4
+  brakeAcceleration: 6
+  frictionAcceleration: 2
   collisionAcceleration: 800
   turnAngle: 80
   driftBuff: 30

@@ -12,7 +12,6 @@ public class VelocityEstimator : MonoBehaviour
     }
     protected Vector3 _speed;
 
-    // Start is called before the first frame update
     void Start()
     {
         _speed = Vector3.zero;
@@ -20,7 +19,6 @@ public class VelocityEstimator : MonoBehaviour
         lastPosition = myTransform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 currentPosition = myTransform.position;
