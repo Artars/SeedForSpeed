@@ -50,8 +50,8 @@ public class CarCollision : MonoBehaviour
         disabled.enableMovement();
     }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(transform.position,transform.forward*wallDistance);
-    }
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.DrawRay(transform.position,transform.forward*wallDistance);
+    // }
 }

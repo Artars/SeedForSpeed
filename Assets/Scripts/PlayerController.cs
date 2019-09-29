@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public AnimationCurve turnCurve;
     public bool shouldMove = true;
     public bool forDebug = false;
+    public bool gamepadInput = true;
     private bool haveCollided = false;
     public bool isReversed = false;
     int accelerator;
@@ -48,6 +49,15 @@ public class PlayerController : MonoBehaviour
         brake = 1;
     }
 
+    public void inputReceive(bool accelerator, bool brake, bool Right, bool Left){
+        if (accelerator) acceleratorOn();
+        if (brake) brakeOn();
+        if (brake && accelerator && speed < 10) reverseOn();
+        if (Right) turnRight(1f);
+        if (Left) turnLeft(1f);
+        if (!brake && speed > -10) isReversed = false;
+    }
+
     public void stop(){
         accelerator = 0;
         if (speed > 0) speed = 0;
@@ -71,7 +81,7 @@ public class PlayerController : MonoBehaviour
         accelerator = 0;
         brake = 0;
         turn = 0;
-        if (!forDebug){
+        if (!forDebug && gamepadInput){
             if (Input.GetButton("Fire1")) acceleratorOn();
             if (Input.GetButton("Fire2")) brakeOn();
             if (Input.GetButtonDown("Fire2") && accelerator == 0 && speed < 10) reverseOn();
