@@ -11,6 +11,8 @@ public class CameraFollower : MonoBehaviour
     public float speedOffset = -8f;
 
     PlayerController followedPlayer;
+    Rigidbody rbToFollow;
+
     Vector3 usedOffset;
     float speedDrag;
     bool isGoingX = true;
@@ -21,19 +23,33 @@ public class CameraFollower : MonoBehaviour
         usedOffset = offsetOnX;
     }
 
+    public void SetTarget(Transform target)
+    {
+        toFollow = target;
+        rbToFollow = target.GetComponent<Rigidbody>();
+        if(rbToFollow == null)
+        {
+            rbToFollow = target.gameObject.AddComponent<Rigidbody>();
+            rbToFollow.isKinematic = true;
+        }
+        
+
+    }
+
     // Update is called once per frame
     void Update()
     {
         Vector3 nextPosition;
-        isGoingX = followedPlayer.speed > followedPlayer.reversedMaxSpeed;
-        isGoingX = isGoingX && Mathf.Abs(followedPlayer.transform.forward.x) > Mathf.Abs(followedPlayer.transform.forward.z);
+        if(followedPlayer == null) return;
+        isGoingX = rbToFollow.velocity.magnitude > 30f;
+        isGoingX = isGoingX && Mathf.Abs(toFollow.transform.forward.x) > Mathf.Abs(toFollow.transform.forward.z);
         if (isGoingX){
-            speedDrag = speedOffset*followedPlayer.speed/followedPlayer.maxSpeed;
+            speedDrag = speedOffset*rbToFollow.velocity.magnitude/30f;
             nextPosition = toFollow.position+(speedDrag*toFollow.forward);
             usedOffset = Vector3.Lerp(usedOffset,offsetOnX,0.1f);
         }
         else{
-            speedDrag = speedOffset*followedPlayer.speed/followedPlayer.maxSpeed;
+            speedDrag = speedOffset*rbToFollow.velocity.magnitude/30f;
             nextPosition = toFollow.position+(speedDrag*toFollow.forward);
             usedOffset = Vector3.Lerp(usedOffset,offsetOnZ,0.05f);
         }

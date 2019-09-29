@@ -447,8 +447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  maxSpeed: 20
-  reversedMaxSpeed: 10
+  maxSpeed: 40
+  reversedMaxSpeed: 20
   defaultAcceleration: 0.2
   brakeAcceleration: 0.4
   frictionAcceleration: 0.1
@@ -513,7 +513,7 @@ MonoBehaviour:
   isReversed: 0
   loser: 0
   seedCounter: 100
-  seedDrain: 5
+  seedDrain: 1
   speed: 0
   slideSource: {fileID: 3945014575714906160}
   animator: {fileID: 5722481163482199787}

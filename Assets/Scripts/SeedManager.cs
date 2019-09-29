@@ -14,10 +14,13 @@ public class SeedManager : MonoBehaviour
     public GameObject cuckatielPrefab;
     public CameraFollower cameraFollower;
 
+    public Transform pivot;
+
     public UIManager uIManager;
 
     protected List<CarConfiguration> cars;
     public Transform initialPosition;
+    public QUICKFOLOWER follower;
 
 
     [System.Serializable]
@@ -149,6 +152,7 @@ public class SeedManager : MonoBehaviour
                 Transform transformToAssing = carController.cuckatielPositions[useIndex];
                 c.transform.position = transformToAssing.position;
                 c.transform.rotation = transformToAssing.rotation;
+                c.transform.SetParent(transformToAssing);
             }
             
         }
@@ -206,12 +210,22 @@ public class SeedManager : MonoBehaviour
 
     public void RemoveCar (int id){
         cars[id].RemovePlayers();
+        Destroy(cars[id].carController.gameObject);
         cars[id].carController = null;
-        if(cars.Count == 0) 
+
+        bool hasEnded = true;
+        for (int i = 0; i < cars.Count; i++)
+        {
+            if(cars[i].carController != null)
+                hasEnded = false;
+        }
+        if(hasEnded) 
         {
             gameOver = true;
             StartGameOver();
+            Debug.Log("Game over");
         }
+        Debug.Log("Removed " + id);
     }
 
     public void ScrambleCarPlaces(int id){
@@ -316,28 +330,36 @@ public class SeedManager : MonoBehaviour
 
     public void Update()
     {
-        if(isGamePlaying)
+        if(isGamePlaying && !gameOver)
         {
-        int winningPlayer = -1;
-        int winningAmount = 0;
+            int winningPlayer = -1;
+            int winningAmount = 0;
             for (int i = 0; i < cars.Count; i++)
             {
-                if(cars[i].carController.seedCounter > winningAmount)
+                if(cars[i].carController != null && cars[i].carController.seedCounter > winningAmount)
                 {
                     winningPlayer = i;
                     winningAmount = cars[i].carController.seedCounter;
                 }
             }
-            cameraFollower.toFollow = cars[winningPlayer].carController.transform;
+            // cameraFollower.SetTarget(cars[winningPlayer].carController.transform);
+            if(winningPlayer != -1)
+            {
+            follower.target = cars[winningPlayer].carController.transform;
+            pivot = cars[winningPlayer].carController.transform;
+
+            }
         }
     }
 
     public void StartGameOver()
     {
-        cameraFollower.toFollow = initialPosition;
+        follower.target = initialPosition;
 
         isGamePlaying = false;
 
         players[0].SetActions(SeedPlayer.PlayerActions.Scream,SeedPlayer.PlayerActions.Start);
+        
+        uIManager.ResetGame();
     }
 }

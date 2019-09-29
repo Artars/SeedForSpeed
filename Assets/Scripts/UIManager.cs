@@ -17,11 +17,19 @@ public class UIManager : MonoBehaviour
     public GameObject teamPrefab;
     public Transform teamParent;
 
+    public void Start()
+    {
+        playerImages = new Dictionary<SeedPlayer, GameObject>();
+        team = new List<SeedManager.CarConfiguration>();
+        teamCounter = new Dictionary<int, TMPro.TMP_Text>();
+    }
+
     public void AddPlayer(SeedPlayer player)
     {
         GameObject newImage = GameObject.Instantiate(prefabImage);
         newImage.transform.parent = (presentationParent);
         newImage.GetComponent<Image>().sprite = sprites[player.cuckatID];
+        newImage.SetActive(true);
 
         playerImages.Add(player, newImage);
     }
@@ -41,18 +49,20 @@ public class UIManager : MonoBehaviour
     public void StartGame(List<SeedManager.CarConfiguration> controllers)
     {
         team = controllers;
-        presentationParent.gameObject.SetActive(true);
+        presentationParent.gameObject.SetActive(false);
         teamParent.gameObject.SetActive(true);
 
         for (int i = 0; i < controllers.Count; i++)
         {
             GameObject toAssingn = GameObject.Instantiate(teamPrefab);
-            Image image = toAssingn.GetComponent<Image>();
+            Image image = toAssingn.GetComponentInChildren<Image>();
             image.color = team[i].carController.currentColor;
             
             TMPro.TMP_Text text = toAssingn.GetComponentInChildren<TMPro.TMP_Text>();
 
             teamCounter.Add(i,text);
+            toAssingn.SetActive(true);
+            toAssingn.transform.SetParent(teamParent);
         }
         isGamePlaying = true;
     }
@@ -72,6 +82,7 @@ public class UIManager : MonoBehaviour
     {
         isGamePlaying = false;
         presentationParent.gameObject.SetActive(true);
+        teamParent.gameObject.SetActive(false);
 
         foreach(var element in teamCounter)
         {

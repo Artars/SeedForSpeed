@@ -565,16 +565,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5991402201474639156}
     m_Modifications:
-    - target: {fileID: 7685123234558316434, guid: ff3c81953a7e6b84ba4f27946e99d056,
-        type: 3}
-      propertyPath: m_Name
-      value: SeedCar
-      objectReference: {fileID: 0}
-    - target: {fileID: 7685123234558316434, guid: ff3c81953a7e6b84ba4f27946e99d056,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7685123234558415794, guid: ff3c81953a7e6b84ba4f27946e99d056,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -639,6 +629,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 99.99992
+      objectReference: {fileID: 0}
+    - target: {fileID: 7685123234558316434, guid: ff3c81953a7e6b84ba4f27946e99d056,
+        type: 3}
+      propertyPath: m_Name
+      value: SeedCar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7685123234558316434, guid: ff3c81953a7e6b84ba4f27946e99d056,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff3c81953a7e6b84ba4f27946e99d056, type: 3}
