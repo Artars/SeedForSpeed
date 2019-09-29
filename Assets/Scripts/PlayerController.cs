@@ -49,13 +49,16 @@ public class PlayerController : MonoBehaviour
         brake = 1;
     }
 
-    public void inputReceive(bool accelerator, bool brake, bool Right, bool Left){
-        if (accelerator) acceleratorOn();
-        if (brake) brakeOn();
-        if (brake && accelerator && speed < 10) reverseOn();
-        if (Right) turnRight(1f);
-        if (Left) turnLeft(1f);
-        if (!brake && speed > -10) isReversed = false;
+    public void inputReceive(bool accel, bool brak, bool right, bool left){
+        accelerator = 0;
+        brake = 0;
+        turn = 0;
+        if (accel) acceleratorOn();
+        if (brak) brakeOn();
+        if (brak && accel && speed < 10) reverseOn();
+        if (right) turnRight(1f);
+        if (left) turnLeft(1f);
+        if (!brak && speed > -10) isReversed = false;
     }
 
     public void stop(){
@@ -78,10 +81,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        accelerator = 0;
-        brake = 0;
-        turn = 0;
         if (!forDebug && gamepadInput){
+            accelerator = 0;
+            brake = 0;
+            turn = 0;
             if (Input.GetButton("Fire1")) acceleratorOn();
             if (Input.GetButton("Fire2")) brakeOn();
             if (Input.GetButtonDown("Fire2") && accelerator == 0 && speed < 10) reverseOn();
