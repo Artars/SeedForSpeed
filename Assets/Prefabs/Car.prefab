@@ -189,6 +189,10 @@ MonoBehaviour:
   forDebug: 0
   gamepadInput: 0
   isReversed: 0
+  loser: 0
+  seedCounter: 100
+  seedDrain: 5
+  speed: 0
 --- !u!114 &7730610165263736819
 MonoBehaviour:
   m_ObjectHideFlags: 0

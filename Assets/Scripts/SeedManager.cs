@@ -9,6 +9,7 @@ public class SeedManager : MonoBehaviour
     public bool isGamePlaying = false;
     public GameObject carPrefab;
     public Transform spawnPoint;
+    public bool gameOver = false;
 
     protected List<CarConfiguration> cars;
 
@@ -29,6 +30,18 @@ public class SeedManager : MonoBehaviour
         {
             players.Remove(player);
             player.carController = null;
+
+            if(player.gameObject != null)
+            {
+                player.SetActions(SeedPlayer.PlayerActions.Scream);
+            }
+        }
+
+        public void RemovePlayers(){
+            while (players.Count > 0){
+                RemovePlayer(players[0]);
+            }
+            assigmentPlayers.Clear();
         }
 
         public CarConfiguration()
@@ -155,6 +168,12 @@ public class SeedManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void RemoveCar (int id){
+        cars[id].RemovePlayers();
+        cars[id].carController = null;
+        if(cars.Count == 0) gameOver = true;
     }
 
     public void ScrambleCarPlaces(int id){
