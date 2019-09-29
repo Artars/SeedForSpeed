@@ -67,10 +67,10 @@ public class PlayerController : MonoBehaviour
     }
 
     public void turnLeft(float input){
-        turn = -Mathf.Abs(input);
+        turn += -Mathf.Abs(input);
     }
     public void turnRight(float input){
-        turn = Mathf.Abs(input);
+        turn += Mathf.Abs(input);
     }
 
     void Start()
