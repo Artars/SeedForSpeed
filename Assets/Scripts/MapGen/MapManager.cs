@@ -151,6 +151,7 @@ public class MapManager : MonoBehaviour{
 
     void ExpandMap(int hor, int vert){
         Spawn(mainBlock + hor - 5 * vert);
+        map[mainBlock].Close();
         int i, j;
         if (hor == 1 && vert == 0){ //move to E
             for(i = 0; i <= 4; i++){
