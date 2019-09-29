@@ -231,7 +231,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 132
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -294,6 +294,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: 200
   mainBlock: 12
+  bannedSequel1:
+  - E
+  - E
+  - N
+  - W
+  bannedSequel2:
+  - W
+  - W
+  - N
+  - E
   map: []
   blockPrefab:
   - {fileID: 2363510625585158276, guid: 1247add1004f23b4698b0a517c749f31, type: 3}

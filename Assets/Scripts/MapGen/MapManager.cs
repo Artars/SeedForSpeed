@@ -5,9 +5,11 @@ using UnityEngine;
 public class MapManager : MonoBehaviour{
 
     public static MapManager instance;
-
     public float offset; //distance between centers
     public int mainBlock = 12; //the index of the block who have the player on
+
+    public string[] bannedSequel1, bannedSequel2;
+    int bannedCount1 = 0, bannedCount2 = 0;
 
     public Block[] map; //the map centered on player
     // - -  -  - -
@@ -25,6 +27,22 @@ public class MapManager : MonoBehaviour{
             instance = this;
         else
             Destroy(this.gameObject);
+    }
+
+    bool Deny (Block b, int newBlock, string prev){
+        if (prev == "S"){
+            if (b.exitE && map[newBlock + 5] != null && (map[newBlock + 5].exitE ||
+                    (map[newBlock + 5].exitS && map[newBlock + 10] != null && map[newBlock + 10].exitE)))
+                return true;
+
+            if (b.exitW && map[newBlock + 5] != null && (map[newBlock + 5].exitW ||
+                    (map[newBlock + 5].exitS && map[newBlock + 10] != null && map[newBlock + 10].exitW)))
+                return true;
+        }
+
+      
+
+        return false;
     }
 
     // Start is called before the first frame update
@@ -79,12 +97,10 @@ public class MapManager : MonoBehaviour{
         if (map[reference + x - 5 * y] == null){
             for (int i = 0; i < blockPrefab.Length; i++){
                 b = blockPrefab[i].GetComponent<Block>();
-                if (exit == b.VerifyExit(dir) && (dir == "S" || !b.VerifyExit("S"))){
+                if (exit == b.VerifyExit(dir) && (dir == "S" || !b.VerifyExit("S")) && !Deny(b, reference + x - 5 * y, dir)){
                     aux.Add(blockPrefab[i]);
-                    Debug.Log(dir + "->" + blockPrefab[i]);
                 }else if (dir == string.Empty && b.IsScenario()){
                     aux.Add(blockPrefab[i]);
-                    Debug.Log("Scenario ->" + blockPrefab[i]);
                 }
             }
             b = Instantiate(aux[Random.Range(0, aux.Count)], this.transform).GetComponent<Block>();
