@@ -10,6 +10,7 @@ public class SeedManager : MonoBehaviour
     public GameObject carPrefab;
     public Transform spawnPoint;
     public bool gameOver = false;
+    // public Color[] colors = new 
 
     protected List<CarConfiguration> cars;
 
