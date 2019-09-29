@@ -253,13 +253,17 @@ client.addEventListener('changeAction', handleChangeAction);
 // isPressed() that we can use check the state of the button
 // and to change which svg shows.
 var Button = function() {
-  var svgSrc = $("button-img").text + $("button-pressed").text;
+  var action = "No";
+  var svgSrc = $("button-img"+ "-" + action).text + $("button-pressed"+ "-" + action).text;
 
-  return function Button(id, options, actions = "test") {
+  return function Button(id, options, actions = "No") {
     var element = $(id);
     var pressed = false;
-    var originalParams = strings.replaceParams(svgSrc, options);
-    element.innerHTML = "<div>" + actions + "</div>" + originalParams;
+    action = actions
+    svgSrc = $("button-img" + "-" + action).text + $("button-pressed"+ "-" + action).text;
+
+    element.innerHTML = strings.replaceParams(svgSrc, options);
+
     var buttonSvg  = element.querySelector(".button-img");
     var pressedSvg = element.querySelector(".button-pressed");
 
@@ -276,7 +280,22 @@ var Button = function() {
     this.press(false);
 
     this.setAction = function(newAction) {
-      element.innerHTML = "<div>" + newAction + "</div>" + originalParams;
+      this.action = newAction;
+      svgSrc = $("button-img-" + newAction).text + $("button-pressed-" + newAction).text;
+
+      element.innerHTML = strings.replaceParams(svgSrc, options);
+      var buttonSvg  = element.querySelector(".button-img");
+      var pressedSvg = element.querySelector(".button-pressed");
+
+      this.press = function(press) {
+        pressed = press;
+        buttonSvg.style.display  =  pressed ? "none" : "inline-block";
+        pressedSvg.style.display = !pressed ? "none" : "inline-block";
+      };
+  
+      this.press(false);
+
+      // element.innerHTML = "<div>" + newAction + "</div>" + originalParams;
     }
   };
 }();

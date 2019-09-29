@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/HappyFunTimes/Samples/Scenes/2DPlatformScene.unity
-    guid: 9347f856bd6764596a9bea838195ba47
+    path: Assets/Scenes/PlayerTest.unity
+    guid: c6b4f29c758f35b478f218af2a16abdc
   m_configObjects: {}

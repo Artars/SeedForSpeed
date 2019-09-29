@@ -7179,7 +7179,7 @@ MonoBehaviour:
     type: 3}
   maxPlayers: 0
   happyfuntimesOptions:
-    controllerFilename: controllers/s4s/controller.html
+    controllerFilename: controllers/gamepad/controller.html
     name: 
     id: 
     master: 0
