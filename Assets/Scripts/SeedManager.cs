@@ -9,6 +9,8 @@ public class SeedManager : MonoBehaviour
     public bool isGamePlaying = false;
     public GameObject carPrefab;
     public Transform spawnPoint;
+    public bool gameOver = false;
+    public Color[] colors = new Color[] {Color.red,Color.blue,Color.yellow};
 
     protected List<CarConfiguration> cars;
 
@@ -23,12 +25,25 @@ public class SeedManager : MonoBehaviour
         {
             players.Add(player);
             player.carController = carController;
+            player.SetColor(player.carController.currentColor);
         }
 
         public void RemovePlayer(SeedPlayer player)
         {
             players.Remove(player);
             player.carController = null;
+
+            if(player.gameObject != null)
+            {
+                player.SetActions(SeedPlayer.PlayerActions.Scream);
+            }
+        }
+
+        public void RemovePlayers(){
+            while (players.Count > 0){
+                RemovePlayer(players[0]);
+            }
+            assigmentPlayers.Clear();
         }
 
         public CarConfiguration()
@@ -157,6 +172,12 @@ public class SeedManager : MonoBehaviour
         }
     }
 
+    public void RemoveCar (int id){
+        cars[id].RemovePlayers();
+        cars[id].carController = null;
+        if(cars.Count == 0) gameOver = true;
+    }
+
     public void ScrambleCarPlaces(int id){
         if (id > -1 && id < cars.Count) cars[id].RandomizePositions();
     }
@@ -172,14 +193,7 @@ public class SeedManager : MonoBehaviour
         //Instantiate car
         for(int i = 0; i < numCars; i++)
         {
-            GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * i * 2, spawnPoint.rotation);
-            PlayerController playerController = newCar.GetComponent<PlayerController>();
-            playerController.id = i;
-
-            CarConfiguration newConfiguration = new CarConfiguration();
-            newConfiguration.carController = playerController;
-
-            cars.Add(newConfiguration);
+            InstantiateCar(i);
         }
 
         List<int>[] assigment = new List<int>[numCars];
@@ -216,6 +230,20 @@ public class SeedManager : MonoBehaviour
         isGamePlaying = true;
     }
 
+    protected void InstantiateCar(int index)
+    {
+        GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * index * 2, spawnPoint.rotation);
+        PlayerController playerController = newCar.GetComponent<PlayerController>();
+        playerController.id = index;
+        playerController.SetCarColor(colors[index]);
+
+        CarConfiguration newConfiguration = new CarConfiguration();
+        newConfiguration.carController = playerController;
+        
+
+        cars.Add(newConfiguration);
+    }
+
     protected List<int> RandomizeArray(List<int> vector)
     {
         List<int> randomized = new List<int>();
@@ -231,5 +259,17 @@ public class SeedManager : MonoBehaviour
         return randomized;
     }
 
+    public void debugStartGame(int numCars = 1){
+        for(int i = 0; i < numCars; i++)
+        {
+            InstantiateCar(i);
+        }
+        cars[0].carController.gamepadInput = true;
+    }
 
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.P))
+            debugStartGame(3);
+    }
 }

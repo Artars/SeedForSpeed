@@ -6,15 +6,18 @@ public class CarCollision : MonoBehaviour
 {
     public float repulsion = 5f;
     public float wallDistance = 13f;
+    public AudioSource crashSoundSource;
     bool onWall = false;
     Vector3 lastTarget;
     PlayerController movementControl;
     void OnCollisionEnter(Collision collision)
     {
+        bool shouldPlaySound = false;
         ContactPoint contact = collision.GetContact(0);
         Rigidbody body1 = contact.thisCollider.GetComponent<Rigidbody>();
         Rigidbody body2 = contact.otherCollider.GetComponent<Rigidbody>();
         if (contact.otherCollider.gameObject.tag == "Car"){
+            shouldPlaySound = true;
             float speed1 = GetComponent<VelocityEstimator>().speed.magnitude;
             float speed2 = contact.otherCollider.GetComponent<VelocityEstimator>().speed.magnitude;
 
@@ -29,6 +32,7 @@ public class CarCollision : MonoBehaviour
         }
         else if (contact.otherCollider.gameObject.tag != "Prop"){
             if (Physics.Raycast(transform.position,transform.forward,wallDistance,LayerMask.GetMask("Parede"))) {
+                shouldPlaySound = true;
                 movementControl.GetComponent<PlayerController>().stop();
                 Debug.Log("Scramble!!!");
                 if(SeedManager.instance != null) 
@@ -47,6 +51,12 @@ public class CarCollision : MonoBehaviour
                 onWall = true;
                 lastTarget = target;
             }
+        }
+
+        
+        if(shouldPlaySound)
+        {
+            PlaySound();
         }
     }
 
@@ -68,6 +78,14 @@ public class CarCollision : MonoBehaviour
     IEnumerator enableBackMovement(float time,PlayerController disabled){
         yield return new WaitForSeconds(time);
         disabled.enableMovement();
+    }
+
+    public void PlaySound()
+    {
+        if(crashSoundSource != null)
+        {
+            crashSoundSource.Play();
+        }
     }
 
     // void OnDrawGizmos()

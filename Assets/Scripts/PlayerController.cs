@@ -20,18 +20,32 @@ public class PlayerController : MonoBehaviour
     public bool gamepadInput = true;
     private bool haveCollided = false;
     public bool isReversed = false;
+    public bool loser = false;
+    public int seedCounter = 100;
+    public int seedDrain = 5;
     int accelerator;
     int brake;
     float turn;
     bool isDrifting = false;
     bool isOnWall = false;
-    float speed = 0f;
+    public float speed = 0f;
+
+    [Header("Sounds")]
+    public AudioSource slideSource;
+
+    [Header("References")]
+    public Animator animator;
+    public MeshRenderer carRenderer;
+    public int materialIndex = 0;
+
     Vector3 steering;
     Transform bodyPosition;
     Rigidbody body;
 
     float toRight = 0;
     float toLeft = 0;
+
+    public Color currentColor = Color.blue;
 
     public void acceleratorOn(){
         accelerator = 1;
@@ -75,7 +89,6 @@ public class PlayerController : MonoBehaviour
             turnRight(1f);
         else if(direction < 0)
             turnLeft(1f);
-
     }
 
     public void inputReceiveLeft(bool left){
@@ -113,14 +126,28 @@ public class PlayerController : MonoBehaviour
         isOnWall = false;
     }
 
+    public void seedGain(int x){
+        seedCounter += x;
+    }
+
+    public void seedDrainSet(int x){
+        seedDrain = x;
+    }
+
+    void seedDepletion(){
+        seedCounter -= seedDrain;
+    }
+
     void Start()
     {
         bodyPosition = transform;
         body = GetComponent<Rigidbody>();
+        InvokeRepeating("seedDepletion",1f,1f);
     }
 
     void Update()
     {
+        if(loser) return;
         if (!forDebug && gamepadInput){
             accelerator = 0;
             brake = 0;
@@ -158,10 +185,36 @@ public class PlayerController : MonoBehaviour
             if (!isOnWall && speed < -reversedMaxSpeed) speed = -reversedMaxSpeed;
             else if (isOnWall && speed < -reversedMaxSpeed*wallDebuff) speed = -reversedMaxSpeed*wallDebuff;
         }
+        if (seedCounter <= 0){
+            loser = true;
+            SeedManager.instance.RemoveCar(id);
+        }
+
+        if(isDrifting && !haveCollided && !isReversed)
+        {
+            if(!slideSource.isPlaying)
+            {
+                slideSource.Play();
+            }
+        }
+        else
+        {
+            if(slideSource.isPlaying)
+            {
+                slideSource.Stop();
+            }
+        }
+
+        if(animator != null)
+        {
+            animator.SetBool("Drifting", isDrifting && !isReversed);
+            animator.SetFloat("Steer", steering.y);
+        }
     }
 
     void FixedUpdate()
     {
+        if(loser) return;
         if (!shouldMove) return;
         int isDrift = (isDrifting)?1:0;
         steering = new Vector3(0f,turnAngle*turnCurve.Evaluate(Mathf.Abs(speed)/maxSpeed)+driftBuff*isDrift,0f);
@@ -171,6 +224,10 @@ public class PlayerController : MonoBehaviour
         body.MovePosition(newPosition);
     }
 
+    void OnBecameInvisible() {
+        loser = true;
+        SeedManager.instance.RemoveCar(id);
+    }
     IEnumerator collisionStop(){
         while (haveCollided){
             body.AddForce(-body.velocity.normalized*collisionAcceleration,ForceMode.Acceleration);
@@ -181,6 +238,23 @@ public class PlayerController : MonoBehaviour
                 speed = 0;
             }
             yield return null;
+        }
+    }
+
+    public void SetCarColor(Color newColor)
+    {
+        currentColor = newColor;
+        if(carRenderer != null)
+        {
+            carRenderer.materials[materialIndex].color = currentColor;
+        }
+    }
+
+    public void ReactBump()
+    {
+        if(animator != null)
+        {
+            animator.SetTrigger("Bump");
         }
     }
 }
