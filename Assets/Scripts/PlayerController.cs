@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
         bool accel = accelerator == 1;
         brake = 0;
         if (brak) brakeOn();
-        if (brak && accel && speed < 10) reverseOn();
+        if (brak && !accel && speed < 10) reverseOn();
         if (!brak && speed > -10) isReversed = false;
     }
 
@@ -152,12 +152,12 @@ public class PlayerController : MonoBehaviour
             accelerator = 0;
             brake = 0;
             turn = 0;
-            // if (Input.GetButton("Fire1")) acceleratorOn();
-            // if (Input.GetButton("Fire2")) brakeOn();
-            // if (Input.GetKey("Fire2") && accelerator == 0 && speed < 10) reverseOn();
-            if (Input.GetKey(KeyCode.W)) acceleratorOn();
-            if (Input.GetKey(KeyCode.S)) brakeOn();
-            if (Input.GetKey(KeyCode.S) && accelerator == 0 && speed < 10) reverseOn();
+            if (Input.GetButton("Fire1")) acceleratorOn();
+            if (Input.GetButton("Fire2")) brakeOn();
+            if (Input.GetButton("Fire2") && accelerator == 0 && speed < 10) reverseOn();
+            // if (Input.GetKey(KeyCode.W)) acceleratorOn();
+            // if (Input.GetKey(KeyCode.S)) brakeOn();
+            // if (Input.GetKey(KeyCode.S) && accelerator == 0 && speed < 10) reverseOn();
             float aux = Input.GetAxis("Horizontal");
             if (aux>0) turnRight(aux);
             else if (aux<0) turnLeft(aux);
