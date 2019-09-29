@@ -47,4 +47,8 @@ public class Block : MonoBehaviour{
     public bool IsScenario(){
         return !exitN && !exitS && !exitE && !exitW;
     }
+
+    public void Close(){
+        this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
+    }
 }
