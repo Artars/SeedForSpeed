@@ -7,6 +7,9 @@ public class Block : MonoBehaviour{
 
     public float size;
     public bool exitN, exitS, exitE, exitW;
+
+    public GameObject barrier;
+    
     int index;
 
     public Color[] colors;
@@ -22,7 +25,7 @@ public class Block : MonoBehaviour{
     }
 
     public void Initialize(){
-        this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[Random.Range(0, colors.Length)];
+        //this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[Random.Range(0, colors.Length)];
     }
 
     public bool VerifyExit(string dir){
@@ -49,6 +52,10 @@ public class Block : MonoBehaviour{
     }
 
     public void Close(){
-        this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
+        barrier.SetActive(true);
+        exitE = false;
+        exitW = false;
+        exitN = false;
+        exitS = false;
     }
 }

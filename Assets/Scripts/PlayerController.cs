@@ -20,8 +20,9 @@ public class PlayerController : MonoBehaviour
     public bool gamepadInput = true;
     private bool haveCollided = false;
     public bool isReversed = false;
-
-    
+    public bool loser = false;
+    public int seedCounter = 100;
+    public int seedDrain = 5;
     int accelerator;
     int brake;
     float turn;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public MeshRenderer carRenderer;
     public int materialIndex = 0;
+    public Transform[] cuckatielPositions;
 
     Vector3 steering;
     Transform bodyPosition;
@@ -44,7 +46,7 @@ public class PlayerController : MonoBehaviour
     float toRight = 0;
     float toLeft = 0;
 
-    Color currentColor = Color.blue;
+    public Color currentColor = Color.blue;
 
     public void acceleratorOn(){
         accelerator = 1;
@@ -75,7 +77,7 @@ public class PlayerController : MonoBehaviour
         bool accel = accelerator == 1;
         brake = 0;
         if (brak) brakeOn();
-        if (brak && accel && speed < 10) reverseOn();
+        if (brak && !accel && speed < 10) reverseOn();
         if (!brak && speed > -10) isReversed = false;
     }
 
@@ -88,7 +90,6 @@ public class PlayerController : MonoBehaviour
             turnRight(1f);
         else if(direction < 0)
             turnLeft(1f);
-
     }
 
     public void inputReceiveLeft(bool left){
@@ -126,24 +127,38 @@ public class PlayerController : MonoBehaviour
         isOnWall = false;
     }
 
+    public void seedGain(int x){
+        seedCounter += x;
+    }
+
+    public void seedDrainSet(int x){
+        seedDrain = x;
+    }
+
+    void seedDepletion(){
+        seedCounter -= seedDrain;
+    }
+
     void Start()
     {
         bodyPosition = transform;
         body = GetComponent<Rigidbody>();
+        InvokeRepeating("seedDepletion",1f,1f);
     }
 
     void Update()
     {
+        if(loser) return;
         if (!forDebug && gamepadInput){
             accelerator = 0;
             brake = 0;
             turn = 0;
-            // if (Input.GetButton("Fire1")) acceleratorOn();
-            // if (Input.GetButton("Fire2")) brakeOn();
-            // if (Input.GetKey("Fire2") && accelerator == 0 && speed < 10) reverseOn();
-            if (Input.GetKey(KeyCode.W)) acceleratorOn();
-            if (Input.GetKey(KeyCode.S)) brakeOn();
-            if (Input.GetKey(KeyCode.S) && accelerator == 0 && speed < 10) reverseOn();
+            if (Input.GetButton("Fire1")) acceleratorOn();
+            if (Input.GetButton("Fire2")) brakeOn();
+            if (Input.GetButton("Fire2") && accelerator == 0 && speed < 10) reverseOn();
+            // if (Input.GetKey(KeyCode.W)) acceleratorOn();
+            // if (Input.GetKey(KeyCode.S)) brakeOn();
+            // if (Input.GetKey(KeyCode.S) && accelerator == 0 && speed < 10) reverseOn();
             float aux = Input.GetAxis("Horizontal");
             if (aux>0) turnRight(aux);
             else if (aux<0) turnLeft(aux);
@@ -171,6 +186,10 @@ public class PlayerController : MonoBehaviour
             if (!isOnWall && speed < -reversedMaxSpeed) speed = -reversedMaxSpeed;
             else if (isOnWall && speed < -reversedMaxSpeed*wallDebuff) speed = -reversedMaxSpeed*wallDebuff;
         }
+        if (seedCounter <= 0){
+            loser = true;
+            SeedManager.instance.RemoveCar(id);
+        }
 
         if(isDrifting && !haveCollided && !isReversed)
         {
@@ -196,6 +215,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(loser) return;
         if (!shouldMove) return;
         int isDrift = (isDrifting)?1:0;
         steering = new Vector3(0f,turnAngle*turnCurve.Evaluate(Mathf.Abs(speed)/maxSpeed)+driftBuff*isDrift,0f);
@@ -205,6 +225,10 @@ public class PlayerController : MonoBehaviour
         body.MovePosition(newPosition);
     }
 
+    void OnBecameInvisible() {
+        loser = true;
+        SeedManager.instance.RemoveCar(id);
+    }
     IEnumerator collisionStop(){
         while (haveCollided){
             body.AddForce(-body.velocity.normalized*collisionAcceleration,ForceMode.Acceleration);

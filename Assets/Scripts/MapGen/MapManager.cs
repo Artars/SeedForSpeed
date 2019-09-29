@@ -49,6 +49,7 @@ public class MapManager : MonoBehaviour{
     void Start(){
         map = new Block[25];
         map[mainBlock] = this.transform.GetChild(0).GetComponent<Block>();
+        map[mainBlock].transform.localScale = Vector3.one * offset / map[mainBlock].size;
         Setup();
     }
 
@@ -104,6 +105,7 @@ public class MapManager : MonoBehaviour{
                 }
             }
             b = Instantiate(aux[Random.Range(0, aux.Count)], this.transform).GetComponent<Block>();
+            b.transform.localScale = Vector3.one * offset / b.size;
             b.transform.position = map[reference].transform.position + (Vector3.right * x + Vector3.forward * y) * offset;
             map[reference + x - 5 * y] = b;
             b.Initialize();

@@ -9,6 +9,9 @@ public class SeedManager : MonoBehaviour
     public bool isGamePlaying = false;
     public GameObject carPrefab;
     public Transform spawnPoint;
+    public bool gameOver = false;
+    public Color[] colors = new Color[] {Color.red,Color.blue,Color.yellow};
+    public GameObject cuckatielPrefab;
 
     protected List<CarConfiguration> cars;
 
@@ -18,17 +21,36 @@ public class SeedManager : MonoBehaviour
         public List<SeedPlayer> players;
         public PlayerController carController;
         protected Dictionary<SeedPlayer.PlayerActions,SeedPlayer> assigmentPlayers;
+        protected Dictionary<SeedPlayer, Cuckatiel> cuckatiels;
 
         public void AddPlayer(SeedPlayer player)
         {
             players.Add(player);
             player.carController = carController;
+            player.SetColor(player.carController.currentColor);            
+        }
+
+        public void AddCuckatiel(Cuckatiel c, SeedPlayer sp)
+        {
+            cuckatiels.Add(sp,c);
         }
 
         public void RemovePlayer(SeedPlayer player)
         {
             players.Remove(player);
             player.carController = null;
+
+            if(player.gameObject != null)
+            {
+                player.SetActions(SeedPlayer.PlayerActions.Scream);
+            }
+        }
+
+        public void RemovePlayers(){
+            while (players.Count > 0){
+                RemovePlayer(players[0]);
+            }
+            assigmentPlayers.Clear();
         }
 
         public CarConfiguration()
@@ -41,6 +63,7 @@ public class SeedManager : MonoBehaviour
             assigmentPlayers.Add(SeedPlayer.PlayerActions.Brake, null);
 
             players = new List<SeedPlayer>();
+            cuckatiels = new Dictionary<SeedPlayer, Cuckatiel>();
         }
 
         public int Count
@@ -107,6 +130,20 @@ public class SeedManager : MonoBehaviour
                     assigmentPlayers[selected[i,1]] = players[i];
                 }
             }
+
+            //Set cuckatiel positions
+            List<int> cuckatielPos = new List<int>(){0,1,2,3};
+            for(int i = 0; i < numPlayers; i++)
+            {
+                int getIndex = Random.Range(0,cuckatielPos.Count);
+                int useIndex = cuckatielPos[getIndex];
+                cuckatielPos.RemoveAt(getIndex);
+
+                Cuckatiel c = cuckatiels[players[i]];
+                Transform transformToAssing = carController.cuckatielPositions[useIndex];
+                c.transform.position = transformToAssing.position;
+                c.transform.rotation = transformToAssing.rotation;
+            }
             
         }
     }
@@ -157,6 +194,12 @@ public class SeedManager : MonoBehaviour
         }
     }
 
+    public void RemoveCar (int id){
+        cars[id].RemovePlayers();
+        cars[id].carController = null;
+        if(cars.Count == 0) gameOver = true;
+    }
+
     public void ScrambleCarPlaces(int id){
         if (id > -1 && id < cars.Count) cars[id].RandomizePositions();
     }
@@ -172,14 +215,7 @@ public class SeedManager : MonoBehaviour
         //Instantiate car
         for(int i = 0; i < numCars; i++)
         {
-            GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * i * 2, spawnPoint.rotation);
-            PlayerController playerController = newCar.GetComponent<PlayerController>();
-            playerController.id = i;
-
-            CarConfiguration newConfiguration = new CarConfiguration();
-            newConfiguration.carController = playerController;
-
-            cars.Add(newConfiguration);
+            InstantiateCar(i);
         }
 
         List<int>[] assigment = new List<int>[numCars];
@@ -209,11 +245,34 @@ public class SeedManager : MonoBehaviour
             foreach (var item in assigment[i])
             {
                 cars[i].AddPlayer(players[item]);
+
+                //Instatiate cuckatiels
+                GameObject cuckatielObj = GameObject.Instantiate(cuckatielPrefab);
+                Cuckatiel cuckatiel = cuckatielObj.GetComponent<Cuckatiel>();
+                cuckatiel.SetCuckatiel(players[item]);
+                cars[i].AddCuckatiel(cuckatiel,players[item]);
+
             }
             cars[i].RandomizePositions();
         }
 
+
+
         isGamePlaying = true;
+    }
+
+    protected void InstantiateCar(int index)
+    {
+        GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * index * 2, spawnPoint.rotation);
+        PlayerController playerController = newCar.GetComponent<PlayerController>();
+        playerController.id = index;
+        playerController.SetCarColor(colors[index]);
+
+        CarConfiguration newConfiguration = new CarConfiguration();
+        newConfiguration.carController = playerController;
+        
+
+        cars.Add(newConfiguration);
     }
 
     protected List<int> RandomizeArray(List<int> vector)
@@ -234,15 +293,14 @@ public class SeedManager : MonoBehaviour
     public void debugStartGame(int numCars = 1){
         for(int i = 0; i < numCars; i++)
         {
-            GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * i * 2, spawnPoint.rotation);
-            PlayerController playerController = newCar.GetComponent<PlayerController>();
-            playerController.id = i;
-            if (i == 0) playerController.gamepadInput = true;
-
-            CarConfiguration newConfiguration = new CarConfiguration();
-            newConfiguration.carController = playerController;
-
-            cars.Add(newConfiguration);
+            InstantiateCar(i);
         }
+        cars[0].carController.gamepadInput = true;
+    }
+
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.P))
+            debugStartGame(3);
     }
 }
