@@ -150,7 +150,7 @@ public class HFTGamepad : MonoBehaviour {
   public Color color = new Color(0.0f, 1.0f, 0.0f);
   public ControllerOptions controllerOptions;
 
-  HFTGamepad() {
+  protected HFTGamepad() {
     axes = new float[33];
     buttons = new Button[28];
 
@@ -196,7 +196,7 @@ public class HFTGamepad : MonoBehaviour {
   public Button[] buttons;
 
   // Manages the connection between this object and the phone.
-  private NetPlayer m_netPlayer;
+  protected NetPlayer m_netPlayer;
   private HFTPlayerNameManager m_playerNameManager;
   private static int s_colorCount = 0;
 
@@ -305,7 +305,7 @@ public class HFTGamepad : MonoBehaviour {
     }
   }
 
-  void SendColor()
+  protected void SendColor()
   {
     if (m_netPlayer != null)
     {
