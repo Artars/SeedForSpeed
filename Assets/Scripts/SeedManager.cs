@@ -12,10 +12,13 @@ public class SeedManager : MonoBehaviour
     public bool gameOver = false;
     public Color[] colors = new Color[] {Color.red,Color.blue,Color.yellow};
     public GameObject cuckatielPrefab;
+    public CameraFollower cameraFollower;
 
     public UIManager uIManager;
 
     protected List<CarConfiguration> cars;
+    public Transform initialPosition;
+
 
     [System.Serializable]
     public class CarConfiguration
@@ -24,6 +27,7 @@ public class SeedManager : MonoBehaviour
         public PlayerController carController;
         protected Dictionary<SeedPlayer.PlayerActions,SeedPlayer> assigmentPlayers;
         protected Dictionary<SeedPlayer, Cuckatiel> cuckatiels;
+
 
         public void AddPlayer(SeedPlayer player)
         {
@@ -203,7 +207,11 @@ public class SeedManager : MonoBehaviour
     public void RemoveCar (int id){
         cars[id].RemovePlayers();
         cars[id].carController = null;
-        if(cars.Count == 0) gameOver = true;
+        if(cars.Count == 0) 
+        {
+            gameOver = true;
+            StartGameOver();
+        }
     }
 
     public void ScrambleCarPlaces(int id){
@@ -308,7 +316,28 @@ public class SeedManager : MonoBehaviour
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
-            debugStartGame(3);
+        if(isGamePlaying)
+        {
+        int winningPlayer = -1;
+        int winningAmount = 0;
+            for (int i = 0; i < cars.Count; i++)
+            {
+                if(cars[i].carController.seedCounter > winningAmount)
+                {
+                    winningPlayer = i;
+                    winningAmount = cars[i].carController.seedCounter;
+                }
+            }
+            cameraFollower.toFollow = cars[winningPlayer].carController.transform;
+        }
+    }
+
+    public void StartGameOver()
+    {
+        cameraFollower.toFollow = initialPosition;
+
+        isGamePlaying = false;
+
+        players[0].SetActions(SeedPlayer.PlayerActions.Scream,SeedPlayer.PlayerActions.Start);
     }
 }
