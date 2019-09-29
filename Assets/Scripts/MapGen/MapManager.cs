@@ -16,7 +16,7 @@ public class MapManager : MonoBehaviour{
     // - SW S SE -
     // - -  -  - -
 
-    public GameObject blockPrefab;
+    public GameObject[] blockPrefab;
 
     public Transform car;
 
@@ -35,26 +35,75 @@ public class MapManager : MonoBehaviour{
     }
 
     public void Setup(){
+
         Spawn(mainBlock);
     }
 
     void Spawn(int center){
-        Block b;
-        for (int i = 0; i < 8; i++){
-            int x = 0, y = 0; //positions by the center
-            //N=(0,1); NE=(1,1); E=(1,0); SE=(1,-1); S=(0,-1); SW=(-1,-1); W(-1,0); NW=(-1,1)
-            if (i == 1 || i == 2 || i == 3) x += 1;
-            if (i == 5 || i == 6 || i == 7) x -= 1;
-            if (i == 7 || i == 1 || i == 0) y += 1;
-            if (i == 3 || i == 4 || i == 5) y -= 1;
 
-            if (map[center + x - 5*y] == null) {
-                b = Instantiate(blockPrefab, this.transform).GetComponent<Block>();
-                b.transform.position = map[center].transform.position + (Vector3.right * x + Vector3.forward * y) * offset;
-                map[center + x - 5*y] = b;
-                b.Initialize();
+        if(map[center].exitN){
+            SpawnBlock(center, "S", true, 0, 1);
+            if (map[center - 5].exitE) SpawnBlock(center, "W", true, 1, 1);
+            if (map[center - 5].exitW) SpawnBlock(center, "E", true, -1, 1);
+        }
+
+        if(map[center].exitW){
+            SpawnBlock(center, "E", map[center].exitW, -1, 0);
+            if (map[center - 1].exitN){
+                SpawnBlock(center, "S", true, -1, 1);
+                if (map[center - 6].exitE){
+                    SpawnBlock(center, "W", true, 0, 1);
+                    if (map[center - 5].exitE) SpawnBlock(center, "W", true, 1, 1);
+                }
             }
         }
+
+        if(map[center].exitE){
+            SpawnBlock(center, "W", map[center].exitW, 1, 0);
+            if (map[center + 1].exitN){
+                SpawnBlock(center, "S", true, 1, 1);
+                if (map[center - 4].exitW){
+                    SpawnBlock(center, "E", true, 0, 1);
+                    if (map[center - 5].exitE) SpawnBlock(center, "E", true, -1, 1);
+                }
+            }
+        }
+
+        SpawnScenario(center);
+    }
+
+    void SpawnBlock(int reference, string dir, bool exit, int x, int y){
+        Block b;
+        List<GameObject> aux = new List<GameObject>();
+
+        if (map[reference + x - 5 * y] == null){
+            for (int i = 0; i < blockPrefab.Length; i++){
+                b = blockPrefab[i].GetComponent<Block>();
+                if (exit == b.VerifyExit(dir) && (dir == "S" || !b.VerifyExit("S"))){
+                    aux.Add(blockPrefab[i]);
+                    Debug.Log(dir + "->" + blockPrefab[i]);
+                }else if (dir == string.Empty && b.IsScenario()){
+                    aux.Add(blockPrefab[i]);
+                    Debug.Log("Scenario ->" + blockPrefab[i]);
+                }
+            }
+            b = Instantiate(aux[Random.Range(0, aux.Count)], this.transform).GetComponent<Block>();
+            b.transform.position = map[reference].transform.position + (Vector3.right * x + Vector3.forward * y) * offset;
+            map[reference + x - 5 * y] = b;
+            b.Initialize();
+            aux.Clear();
+        }
+    }
+
+    void SpawnScenario(int reference){
+        SpawnBlock(reference, "", true, 0, -1);
+        SpawnBlock(reference, "", true, 0, 1);
+        SpawnBlock(reference, "", true, 1, -1);
+        SpawnBlock(reference, "", true, 1, 1);
+        SpawnBlock(reference, "", true, -1, -1);
+        SpawnBlock(reference, "", true, -1, 1);
+        SpawnBlock(reference, "", true, 1, 0);
+        SpawnBlock(reference, "", true, -1, 0);
     }
 
     // Update is called once per frame
@@ -66,16 +115,12 @@ public class MapManager : MonoBehaviour{
 
             if (angle < 45.0f){
                 ExpandMap(0,1);
-                Debug.Log("N");
             } else if (angle > 135.0f){
                 ExpandMap(0,-1);
-                 Debug.Log("S");
             } else if(car.position.x < map[mainBlock].transform.position.x){
                 ExpandMap(-1,0);
-                Debug.Log("W");
             } else {    
                 ExpandMap(1,0);
-                Debug.Log("E");
             }
         }
 

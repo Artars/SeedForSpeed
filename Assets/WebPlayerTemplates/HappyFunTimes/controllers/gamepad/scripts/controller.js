@@ -219,12 +219,23 @@ function handlePlaySound(data) {
   }
 }
 
+function handleChangeAction(data) {
+  var action0 = data.action0;
+  var action1 = data.action1;
+
+  console.log("0: " + action0 + " 1: " + action1);
+
+  buttons[0].setAction(action0);
+  buttons[1].setAction(action1);
+}
+
 client.addEventListener('color', handleColor);
 client.addEventListener('options', handleOptions);
 client.addEventListener('full', handleFull);
 client.addEventListener('play', handlePlay);
 client.addEventListener('loadSounds', handleLoadSounds);
 client.addEventListener('playSound', handlePlaySound);
+client.addEventListener('changeAction', handleChangeAction);
 
 // This way of making buttons probably looks complicated but
 // it lets us easily make more buttons.
@@ -242,12 +253,17 @@ client.addEventListener('playSound', handlePlaySound);
 // isPressed() that we can use check the state of the button
 // and to change which svg shows.
 var Button = function() {
-  var svgSrc = $("button-img").text + $("button-pressed").text;
+  var action = "No";
+  var svgSrc = $("button-img"+ "-" + action).text + $("button-pressed"+ "-" + action).text;
 
-  return function Button(id, options) {
+  return function Button(id, options, actions = "No") {
     var element = $(id);
     var pressed = false;
+    action = actions
+    svgSrc = $("button-img" + "-" + action).text + $("button-pressed"+ "-" + action).text;
+
     element.innerHTML = strings.replaceParams(svgSrc, options);
+
     var buttonSvg  = element.querySelector(".button-img");
     var pressedSvg = element.querySelector(".button-pressed");
 
@@ -262,6 +278,25 @@ var Button = function() {
     };
 
     this.press(false);
+
+    this.setAction = function(newAction) {
+      this.action = newAction;
+      svgSrc = $("button-img-" + newAction).text + $("button-pressed-" + newAction).text;
+
+      element.innerHTML = strings.replaceParams(svgSrc, options);
+      var buttonSvg  = element.querySelector(".button-img");
+      var pressedSvg = element.querySelector(".button-pressed");
+
+      this.press = function(press) {
+        pressed = press;
+        buttonSvg.style.display  =  pressed ? "none" : "inline-block";
+        pressedSvg.style.display = !pressed ? "none" : "inline-block";
+      };
+  
+      this.press(false);
+
+      // element.innerHTML = "<div>" + newAction + "</div>" + originalParams;
+    }
   };
 }();
 
