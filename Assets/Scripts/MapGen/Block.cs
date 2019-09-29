@@ -7,6 +7,7 @@ public class Block : MonoBehaviour{
 
     public float size;
     public bool exitN, exitS, exitE, exitW;
+    
     int index;
 
     public Color[] colors;
@@ -50,5 +51,9 @@ public class Block : MonoBehaviour{
 
     public void Close(){
         this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
+        exitE = false;
+        exitW = false;
+        exitN = false;
+        exitS = false;
     }
 }
