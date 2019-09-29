@@ -10,7 +10,7 @@ public class SeedManager : MonoBehaviour
     public GameObject carPrefab;
     public Transform spawnPoint;
     public bool gameOver = false;
-    // public Color[] colors = new 
+    public Color[] colors = new Color[] {Color.red,Color.blue,Color.yellow};
 
     protected List<CarConfiguration> cars;
 
@@ -25,6 +25,7 @@ public class SeedManager : MonoBehaviour
         {
             players.Add(player);
             player.carController = carController;
+            player.SetColor(player.carController.currentColor);
         }
 
         public void RemovePlayer(SeedPlayer player)
@@ -192,14 +193,7 @@ public class SeedManager : MonoBehaviour
         //Instantiate car
         for(int i = 0; i < numCars; i++)
         {
-            GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * i * 2, spawnPoint.rotation);
-            PlayerController playerController = newCar.GetComponent<PlayerController>();
-            playerController.id = i;
-
-            CarConfiguration newConfiguration = new CarConfiguration();
-            newConfiguration.carController = playerController;
-
-            cars.Add(newConfiguration);
+            InstantiateCar(i);
         }
 
         List<int>[] assigment = new List<int>[numCars];
@@ -236,6 +230,20 @@ public class SeedManager : MonoBehaviour
         isGamePlaying = true;
     }
 
+    protected void InstantiateCar(int index)
+    {
+        GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * index * 2, spawnPoint.rotation);
+        PlayerController playerController = newCar.GetComponent<PlayerController>();
+        playerController.id = index;
+        playerController.SetCarColor(colors[index]);
+
+        CarConfiguration newConfiguration = new CarConfiguration();
+        newConfiguration.carController = playerController;
+        
+
+        cars.Add(newConfiguration);
+    }
+
     protected List<int> RandomizeArray(List<int> vector)
     {
         List<int> randomized = new List<int>();
@@ -254,15 +262,14 @@ public class SeedManager : MonoBehaviour
     public void debugStartGame(int numCars = 1){
         for(int i = 0; i < numCars; i++)
         {
-            GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * i * 2, spawnPoint.rotation);
-            PlayerController playerController = newCar.GetComponent<PlayerController>();
-            playerController.id = i;
-            if (i == 0) playerController.gamepadInput = true;
-
-            CarConfiguration newConfiguration = new CarConfiguration();
-            newConfiguration.carController = playerController;
-
-            cars.Add(newConfiguration);
+            InstantiateCar(i);
         }
+        cars[0].carController.gamepadInput = true;
+    }
+
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.P))
+            debugStartGame(3);
     }
 }

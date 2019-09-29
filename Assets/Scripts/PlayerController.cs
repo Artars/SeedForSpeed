@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     float toRight = 0;
     float toLeft = 0;
 
-    Color currentColor = Color.blue;
+    public Color currentColor = Color.blue;
 
     public void acceleratorOn(){
         accelerator = 1;

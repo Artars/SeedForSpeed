@@ -1117,7 +1117,7 @@ Transform:
   m_Children:
   - {fileID: 1291027796}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &320154267
 GameObject:
@@ -2615,7 +2615,7 @@ Transform:
   - {fileID: 1825806776}
   - {fileID: 1627526371}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &708698870
 GameObject:
@@ -5070,75 +5070,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646190393}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1653654132
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7730610165263736776, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_Name
-      value: Car (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 924.5268
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -66.97131
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730610165263736820, guid: e476b2260090d9849a0df40c76cb281d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e476b2260090d9849a0df40c76cb281d, type: 3}
 --- !u!1 &1656147252
 GameObject:
   m_ObjectHideFlags: 0
@@ -5167,7 +5098,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
 --- !u!1 &1657989420
 GameObject:
@@ -5790,6 +5721,11 @@ MonoBehaviour:
   carPrefab: {fileID: 7730610165263736776, guid: e476b2260090d9849a0df40c76cb281d,
     type: 3}
   spawnPoint: {fileID: 1656147253}
+  gameOver: 0
+  colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &1698729639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5804,7 +5740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawnForPlayer: {fileID: 9166475272431806727, guid: e29c2096dc24ddd4bb2c2065ab9d027e,
     type: 3}
-  maxPlayers: 0
+  maxPlayers: 12
   happyfuntimesOptions:
     controllerFilename: controllers/gamepad/controller.html
     name: 
@@ -5830,7 +5766,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1718810236
 GameObject:
