@@ -216,8 +216,8 @@ Camera:
   m_GameObject: {fileID: 1367946376}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.3019608, g: 0.627451, b: 0.25882354, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -231,9 +231,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 132
+  field of view: 75
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 50
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0265b62b95499cf4cb99f138859a13bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: 200
+  offset: 1000
   mainBlock: 12
   bannedSequel1:
   - E
@@ -306,12 +306,7 @@ MonoBehaviour:
   - E
   map: []
   blockPrefab:
-  - {fileID: 2363510625585158276, guid: 1247add1004f23b4698b0a517c749f31, type: 3}
-  - {fileID: 3333537718882862582, guid: 59f090024c2b53b4d9501ab04739b533, type: 3}
-  - {fileID: 1676951198961345197, guid: bbf81a587033054438dfdcaf26bdcf9e, type: 3}
-  - {fileID: 4545169944858645019, guid: bd868b163131e2c4c9efe03682d85b08, type: 3}
-  - {fileID: 4298071674830785923, guid: 869e8daaa8c2cc04c8a03caa9046ec52, type: 3}
-  - {fileID: 8204234096750326485, guid: b174b30681d031c498357cf83691bb60, type: 3}
+  - {fileID: 2363510625585158276, guid: 235052fe3b288054785fbab1632e1ed0, type: 3}
   - {fileID: 4871330192251108493, guid: ab661338b8dbc754f98e657e5bd0dad6, type: 3}
   car: {fileID: 1797304227}
 --- !u!4 &1553651363
@@ -506,6 +501,11 @@ PrefabInstance:
     - target: {fileID: 7646036301109705368, guid: 81360fd004c4e71449d9e957ce80295e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770420156961849048, guid: 81360fd004c4e71449d9e957ce80295e,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
