@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public int id;
     public float maxSpeed = 400f;
     public float reversedMaxSpeed = 100f;
     public float defaultAcceleration = 4f;
@@ -155,7 +156,7 @@ public class PlayerController : MonoBehaviour
             }
             if (speed > 0f && (brake == 0 || accelerator == 1)) speed = 0;
             if (!isOnWall && speed < -reversedMaxSpeed) speed = -reversedMaxSpeed;
-            else if (speed < -reversedMaxSpeed*wallDebuff) speed = -reversedMaxSpeed*wallDebuff;
+            else if (isOnWall && speed < -reversedMaxSpeed*wallDebuff) speed = -reversedMaxSpeed*wallDebuff;
         }
     }
 

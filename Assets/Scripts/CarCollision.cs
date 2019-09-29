@@ -30,11 +30,12 @@ public class CarCollision : MonoBehaviour
         else if (contact.otherCollider.gameObject.tag != "Prop"){
             if (Physics.Raycast(transform.position,transform.forward,wallDistance,LayerMask.GetMask("Parede"))) {
                 movementControl.GetComponent<PlayerController>().stop();
-                // Scramble!!!!
+                Debug.Log("Scramble!!!");
+                if(SeedManager.instance != null) 
+                    SeedManager.instance.ScrambleCarPlaces(GetComponent<PlayerController>().id);
             }
             else if (movementControl.isReversed){
                 movementControl.GetComponent<PlayerController>().stop();
-                // Scramble!!!!
             }
             else if (!movementControl.isReversed) {
                 int reverse = (GetComponent<PlayerController>().isReversed)?-1:1;
