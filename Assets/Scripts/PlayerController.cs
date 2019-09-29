@@ -29,12 +29,23 @@ public class PlayerController : MonoBehaviour
     bool isDrifting = false;
     bool isOnWall = false;
     public float speed = 0f;
+
+    [Header("Sounds")]
+    public AudioSource slideSource;
+
+    [Header("References")]
+    public Animator animator;
+    public MeshRenderer carRenderer;
+    public int materialIndex = 0;
+
     Vector3 steering;
     Transform bodyPosition;
     Rigidbody body;
 
     float toRight = 0;
     float toLeft = 0;
+
+    Color currentColor = Color.blue;
 
     public void acceleratorOn(){
         accelerator = 1;
@@ -178,6 +189,27 @@ public class PlayerController : MonoBehaviour
             loser = true;
             SeedManager.instance.RemoveCar(id);
         }
+
+        if(isDrifting && !haveCollided && !isReversed)
+        {
+            if(!slideSource.isPlaying)
+            {
+                slideSource.Play();
+            }
+        }
+        else
+        {
+            if(slideSource.isPlaying)
+            {
+                slideSource.Stop();
+            }
+        }
+
+        if(animator != null)
+        {
+            animator.SetBool("Drifting", isDrifting && !isReversed);
+            animator.SetFloat("Steer", steering.y);
+        }
     }
 
     void FixedUpdate()
@@ -206,6 +238,23 @@ public class PlayerController : MonoBehaviour
                 speed = 0;
             }
             yield return null;
+        }
+    }
+
+    public void SetCarColor(Color newColor)
+    {
+        currentColor = newColor;
+        if(carRenderer != null)
+        {
+            carRenderer.materials[materialIndex].color = currentColor;
+        }
+    }
+
+    public void ReactBump()
+    {
+        if(animator != null)
+        {
+            animator.SetTrigger("Bump");
         }
     }
 }

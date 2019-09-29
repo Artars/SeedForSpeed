@@ -30,14 +30,17 @@ public class SeedPlayer : MonoBehaviour
         new CurrentControls("Fire2")
     };
 
-
+    public AudioClip[] screamClips;
+    protected AudioSource audioSource;
     protected HFTInput _htfInput;
     protected SeedGamepad _seedGamepad;
+    bool isScreaming = false;
 
     public void Awake()
     {
         _seedGamepad = GetComponent<SeedGamepad>();
         _htfInput = GetComponent<HFTInput>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Start()
@@ -62,6 +65,9 @@ public class SeedPlayer : MonoBehaviour
 
         _seedGamepad.controllerOptions.controllerType = HFTGamepad.ControllerType.c_2button;
         _seedGamepad.SetActions(actions[0].action.ToString(),actions[1].action.ToString());
+
+        isScreaming = false;
+
     }
 
     public void SetActions(PlayerActions action0)
@@ -74,6 +80,9 @@ public class SeedPlayer : MonoBehaviour
 
         _seedGamepad.controllerOptions.controllerType = HFTGamepad.ControllerType.c_1button;
         _seedGamepad.SetActions(actions[0].action.ToString(),actions[1].action.ToString());
+    
+        isScreaming = false;
+
     }
 
     public void SetColor(Color color)
@@ -87,6 +96,7 @@ public class SeedPlayer : MonoBehaviour
     {
         ProcessAction(actions[0]);
         ProcessAction(actions[1]);
+        UpdateScream();
     }
 
     public void ProcessAction(CurrentControls action)
@@ -118,9 +128,23 @@ public class SeedPlayer : MonoBehaviour
         {
             SeedManager.instance.StartGame();
         }
-        else if(action.action == PlayerActions.Scream && state)
+        else if(action.action == PlayerActions.Scream)
         {
-            Debug.Log("AAAAAAAAAAAAAAAAAAAA");
+            isScreaming = state;
         }
     }
+
+    protected void UpdateScream()
+    {
+        if(isScreaming)
+        {
+            if(!audioSource.isPlaying)
+            {
+                AudioClip randomClip = screamClips[Random.Range(0,screamClips.Length)];
+                audioSource.PlayOneShot(randomClip);
+            }
+        }
+    }
+
+    
 }
