@@ -13,6 +13,8 @@ public class SeedManager : MonoBehaviour
     public Color[] colors = new Color[] {Color.red,Color.blue,Color.yellow};
     public GameObject cuckatielPrefab;
 
+    public UIManager uIManager;
+
     protected List<CarConfiguration> cars;
 
     [System.Serializable]
@@ -177,6 +179,8 @@ public class SeedManager : MonoBehaviour
         {
             player.SetActions(SeedPlayer.PlayerActions.Scream);
         }
+
+        uIManager.AddPlayer(player);
     }
 
     public void RemovePlayer(SeedPlayer player)
@@ -192,6 +196,8 @@ public class SeedManager : MonoBehaviour
                 }
             }
         }
+
+        uIManager.RemovePlayer(player);
     }
 
     public void RemoveCar (int id){
@@ -259,6 +265,8 @@ public class SeedManager : MonoBehaviour
 
 
         isGamePlaying = true;
+
+        uIManager.StartGame(cars);
     }
 
     protected void InstantiateCar(int index)
