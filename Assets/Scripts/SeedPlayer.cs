@@ -35,6 +35,11 @@ public class SeedPlayer : MonoBehaviour
     protected HFTInput _htfInput;
     protected SeedGamepad _seedGamepad;
     bool isScreaming = false;
+    
+    public int cuckatielCount = 7;
+    public int cuckatID = 0;
+
+    public Cuckatiel cuckatiel;
 
     public void Awake()
     {
@@ -47,6 +52,7 @@ public class SeedPlayer : MonoBehaviour
     {
         _seedGamepad.OnDisconnect += OnDisconnect;
         SeedManager.instance.AddPlayer(this);
+        cuckatID = Random.Range(0, cuckatielCount);
     }
 
     protected void OnDisconnect()
@@ -143,6 +149,10 @@ public class SeedPlayer : MonoBehaviour
                 AudioClip randomClip = screamClips[Random.Range(0,screamClips.Length)];
                 audioSource.PlayOneShot(randomClip);
             }
+        }
+        if(cuckatiel != null)
+        {
+            cuckatiel.SetScream(isScreaming);
         }
     }
 
