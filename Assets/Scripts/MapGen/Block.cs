@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Block : MonoBehaviour{
 
     public float size;
+    public bool exitN, exitS, exitE, exitW;
     int index;
 
     public Color[] colors;
@@ -21,5 +23,28 @@ public class Block : MonoBehaviour{
 
     public void Initialize(){
         this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[Random.Range(0, colors.Length)];
+    }
+
+    public bool VerifyExit(string dir){
+        switch(dir){
+            case "N":
+                return exitN;
+            
+            case "S":
+                return exitS;
+
+            case "E":
+                return exitE;
+
+            case "W":
+                return exitW;
+
+            default:
+                return false;
+        }
+    }
+
+    public bool IsScenario(){
+        return !exitN && !exitS && !exitE && !exitW;
     }
 }
