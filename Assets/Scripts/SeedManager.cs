@@ -11,6 +11,7 @@ public class SeedManager : MonoBehaviour
     public Transform spawnPoint;
     public bool gameOver = false;
     public Color[] colors = new Color[] {Color.red,Color.blue,Color.yellow};
+    public GameObject cuckatielPrefab;
 
     protected List<CarConfiguration> cars;
 
@@ -20,12 +21,18 @@ public class SeedManager : MonoBehaviour
         public List<SeedPlayer> players;
         public PlayerController carController;
         protected Dictionary<SeedPlayer.PlayerActions,SeedPlayer> assigmentPlayers;
+        protected Dictionary<SeedPlayer, Cuckatiel> cuckatiels;
 
         public void AddPlayer(SeedPlayer player)
         {
             players.Add(player);
             player.carController = carController;
-            player.SetColor(player.carController.currentColor);
+            player.SetColor(player.carController.currentColor);            
+        }
+
+        public void AddCuckatiel(Cuckatiel c, SeedPlayer sp)
+        {
+            cuckatiels.Add(sp,c);
         }
 
         public void RemovePlayer(SeedPlayer player)
@@ -56,6 +63,7 @@ public class SeedManager : MonoBehaviour
             assigmentPlayers.Add(SeedPlayer.PlayerActions.Brake, null);
 
             players = new List<SeedPlayer>();
+            cuckatiels = new Dictionary<SeedPlayer, Cuckatiel>();
         }
 
         public int Count
@@ -121,6 +129,20 @@ public class SeedManager : MonoBehaviour
                 {
                     assigmentPlayers[selected[i,1]] = players[i];
                 }
+            }
+
+            //Set cuckatiel positions
+            List<int> cuckatielPos = new List<int>(){0,1,2,3};
+            for(int i = 0; i < numPlayers; i++)
+            {
+                int getIndex = Random.Range(0,cuckatielPos.Count);
+                int useIndex = cuckatielPos[getIndex];
+                cuckatielPos.RemoveAt(getIndex);
+
+                Cuckatiel c = cuckatiels[players[i]];
+                Transform transformToAssing = carController.cuckatielPositions[useIndex];
+                c.transform.position = transformToAssing.position;
+                c.transform.rotation = transformToAssing.rotation;
             }
             
         }
@@ -223,9 +245,18 @@ public class SeedManager : MonoBehaviour
             foreach (var item in assigment[i])
             {
                 cars[i].AddPlayer(players[item]);
+
+                //Instatiate cuckatiels
+                GameObject cuckatielObj = GameObject.Instantiate(cuckatielPrefab);
+                Cuckatiel cuckatiel = cuckatielObj.GetComponent<Cuckatiel>();
+                cuckatiel.SetCuckatiel(players[item]);
+                cars[i].AddCuckatiel(cuckatiel,players[item]);
+
             }
             cars[i].RandomizePositions();
         }
+
+
 
         isGamePlaying = true;
     }

@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public MeshRenderer carRenderer;
     public int materialIndex = 0;
+    public Transform[] cuckatielPositions;
 
     Vector3 steering;
     Transform bodyPosition;
