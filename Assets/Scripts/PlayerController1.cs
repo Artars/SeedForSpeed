@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController2 : MonoBehaviour
 {
     public float maxSpeed = 400f;
     public float reversedMaxSpeed = 100f;
@@ -27,10 +27,7 @@ public class PlayerController : MonoBehaviour
     Transform bodyPosition;
     Rigidbody body;
 
-    float toRight = 0;
-    float toLeft = 0;
-
-    public void acceleratorOn(){
+    void acceleratorOn(){
         accelerator = 1;
     }
 
@@ -50,53 +47,16 @@ public class PlayerController : MonoBehaviour
         turn += Mathf.Abs(input);
     }
 
-    // public void inputReceive(bool accel, bool brak, bool right, bool left){
-    //     accelerator = 0;
-    //     brake = 0;
-    //     turn = 0;
-    //     if (accel) acceleratorOn();
-    //     if (brak) brakeOn();
-    //     if (brak && accel && speed < 10) reverseOn();
-    //     if (right) turnRight(1f);
-    //     if (left) turnLeft(1f);
-    //     if (!brak && speed > -10) isReversed = false;
-    // }
-
-    public void inputReceiveAccel(bool accel){
+    public void inputReceive(bool accel, bool brak, bool right, bool left){
         accelerator = 0;
-        if (accel) acceleratorOn();
-    }
-
-    public void inputReceiveBrak(bool brak){
-        bool accel = accelerator == 1;
         brake = 0;
+        turn = 0;
+        if (accel) acceleratorOn();
         if (brak) brakeOn();
         if (brak && accel && speed < 10) reverseOn();
+        if (right) turnRight(1f);
+        if (left) turnLeft(1f);
         if (!brak && speed > -10) isReversed = false;
-    }
-
-    public void inputReceiveRight(bool right){
-        turn = 0;
-        toRight = right ? 1:0;
-        
-        float direction = toRight - toLeft;
-        if(direction > 0)
-            turnRight(1f);
-        else if(direction < 0)
-            turnLeft(1f);
-
-    }
-
-    public void inputReceiveLeft(bool left){
-        turn = 0;
-        toLeft = left ? 1:0;
-        
-        float direction = toRight - toLeft;
-        if(direction > 0)
-            turnRight(1f);
-        else if(direction < 0)
-            turnLeft(1f);
-
     }
 
     public void disableMovement(){
