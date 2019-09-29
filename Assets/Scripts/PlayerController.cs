@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float collisionAcceleration = 800f;
     public float turnAngle = 80f;
     public float driftBuff = 30f;
+    public float wallDebuff = 0.5f;
     public AnimationCurve turnCurve;
     public bool shouldMove = true;
     public bool forDebug = false;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     int brake;
     float turn;
     bool isDrifting = false;
+    bool isOnWall = false;
     float speed = 0f;
     Vector3 steering;
     Transform bodyPosition;
@@ -49,18 +51,6 @@ public class PlayerController : MonoBehaviour
     void turnRight(float input){
         turn += Mathf.Abs(input);
     }
-
-    // public void inputReceive(bool accel, bool brak, bool right, bool left){
-    //     accelerator = 0;
-    //     brake = 0;
-    //     turn = 0;
-    //     if (accel) acceleratorOn();
-    //     if (brak) brakeOn();
-    //     if (brak && accel && speed < 10) reverseOn();
-    //     if (right) turnRight(1f);
-    //     if (left) turnLeft(1f);
-    //     if (!brak && speed > -10) isReversed = false;
-    // }
 
     public void inputReceiveAccel(bool accel){
         accelerator = 0;
@@ -110,7 +100,16 @@ public class PlayerController : MonoBehaviour
 
     public void stop(){
         accelerator = 0;
-        if (speed > 0) speed = 0;
+        if (Mathf.Abs(speed) > 0) speed = 0;
+    }
+
+    public void wallTouching(){
+        isOnWall = true;
+        speed = speed*wallDebuff;
+    }
+
+    public void wallFree(){
+        isOnWall = false;
     }
 
     void Start()
@@ -125,9 +124,12 @@ public class PlayerController : MonoBehaviour
             accelerator = 0;
             brake = 0;
             turn = 0;
-            if (Input.GetButton("Fire1")) acceleratorOn();
-            if (Input.GetButton("Fire2")) brakeOn();
-            if (Input.GetButtonDown("Fire2") && accelerator == 0 && speed < 10) reverseOn();
+            // if (Input.GetButton("Fire1")) acceleratorOn();
+            // if (Input.GetButton("Fire2")) brakeOn();
+            // if (Input.GetKey("Fire2") && accelerator == 0 && speed < 10) reverseOn();
+            if (Input.GetKey(KeyCode.W)) acceleratorOn();
+            if (Input.GetKey(KeyCode.S)) brakeOn();
+            if (Input.GetKey(KeyCode.S) && accelerator == 0 && speed < 10) reverseOn();
             float aux = Input.GetAxis("Horizontal");
             if (aux>0) turnRight(aux);
             else if (aux<0) turnLeft(aux);
@@ -142,7 +144,8 @@ public class PlayerController : MonoBehaviour
                 else if (accelerator == 0) speed -= frictionAcceleration;
             }
             if (speed < 0f && (accelerator == 0 || brake == 1)) speed = 0;
-            if (speed > maxSpeed) speed = maxSpeed;
+            if (!isOnWall && speed > maxSpeed) speed = maxSpeed;
+            else if (isOnWall && speed > maxSpeed*wallDebuff) speed = maxSpeed*wallDebuff;
         }
         else if(isReversed && !haveCollided){
             if (brake == 1) speed -= defaultAcceleration;
@@ -151,7 +154,8 @@ public class PlayerController : MonoBehaviour
                 else if (brake == 0) speed += frictionAcceleration;
             }
             if (speed > 0f && (brake == 0 || accelerator == 1)) speed = 0;
-            if (speed < -reversedMaxSpeed) speed = -reversedMaxSpeed;
+            if (!isOnWall && speed < -reversedMaxSpeed) speed = -reversedMaxSpeed;
+            else if (speed < -reversedMaxSpeed*wallDebuff) speed = -reversedMaxSpeed*wallDebuff;
         }
     }
 
