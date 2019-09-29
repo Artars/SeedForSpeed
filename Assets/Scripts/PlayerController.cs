@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     Transform bodyPosition;
     Rigidbody body;
 
+    float toRight = 0;
+    float toLeft = 0;
+
     public void disableMovement(){
         shouldMove = false;
     }
@@ -59,6 +62,43 @@ public class PlayerController : MonoBehaviour
         if (right) turnRight(1f);
         if (left) turnLeft(1f);
         if (!brak && speed > -10) isReversed = false;
+    }
+
+    public void inputReceiveAccel(bool accel){
+        accelerator = 0;
+        if (accel) acceleratorOn();
+    }
+
+     public void inputReceiveBrak(bool brak){
+        bool accel = accelerator == 1;
+        brake = 0;
+        if (brak) brakeOn();
+        if (brak && accel && speed < 10) reverseOn();
+        if (!brak && speed > -10) isReversed = false;
+    }
+
+    public void inputReceiveRight(bool right){
+        turn = 0;
+        toRight = right ? 1:0;
+        
+        float direction = toRight - toLeft;
+        if(direction > 0)
+            turnRight(1f);
+        else if(direction < 0)
+            turnLeft(1f);
+
+    }
+
+    public void inputReceiveLeft(bool left){
+        turn = 0;
+        toLeft = left ? 1:0;
+        
+        float direction = toRight - toLeft;
+        if(direction > 0)
+            turnRight(1f);
+        else if(direction < 0)
+            turnLeft(1f);
+
     }
 
     public void stop(){

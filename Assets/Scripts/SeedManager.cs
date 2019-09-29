@@ -8,6 +8,7 @@ public class SeedManager : MonoBehaviour
     public List<SeedPlayer> players;
     public bool isGamePlaying = false;
     public GameObject carPrefab;
+    public Transform spawnPoint;
 
     protected List<CarConfiguration> cars;
 
@@ -37,7 +38,9 @@ public class SeedManager : MonoBehaviour
             assigmentPlayers.Add(SeedPlayer.PlayerActions.Left,null);
             assigmentPlayers.Add(SeedPlayer.PlayerActions.Right, null);
             assigmentPlayers.Add(SeedPlayer.PlayerActions.Accelerator, null);
-            assigmentPlayers.Add(SeedPlayer.PlayerActions.Breake, null);
+            assigmentPlayers.Add(SeedPlayer.PlayerActions.Brake, null);
+
+            players = new List<SeedPlayer>();
         }
 
         public int Count
@@ -53,7 +56,7 @@ public class SeedManager : MonoBehaviour
                 SeedPlayer.PlayerActions.Left,
                 SeedPlayer.PlayerActions.Right, 
                 SeedPlayer.PlayerActions.Accelerator,
-                SeedPlayer.PlayerActions.Breake};
+                SeedPlayer.PlayerActions.Brake};
             
             // while(rolesRemaining.Count < numPlayers * 2)
             // {
@@ -75,7 +78,7 @@ public class SeedManager : MonoBehaviour
             }
 
             // Add scream roles
-            while(rolesRemaining.Count < numPlayers * 2)
+            while(rolesRemaining.Count < numPlayers)
             {
                 rolesRemaining.Add(SeedPlayer.PlayerActions.Scream);
             }
@@ -97,7 +100,7 @@ public class SeedManager : MonoBehaviour
             // Set roles
             for(int i = 0; i < numPlayers; i++)
             {
-                players[i].SetActions(selected[i,0], selected[i,0]);
+                players[i].SetActions(selected[i,0], selected[i,1]);
                 assigmentPlayers[selected[i,0]] = players[i];
                 if(selected[i,1] != SeedPlayer.PlayerActions.Scream)
                 {
@@ -156,6 +159,8 @@ public class SeedManager : MonoBehaviour
 
     public void StartGame()
     {
+        if(isGamePlaying) return;
+
         int numCars = Mathf.CeilToInt(players.Count/4.0f);
 
         cars.Clear();
@@ -163,7 +168,7 @@ public class SeedManager : MonoBehaviour
         //Instantiate car
         for(int i = 0; i < numCars; i++)
         {
-            GameObject newCar = GameObject.Instantiate(carPrefab);
+            GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * i * 2, spawnPoint.rotation);
             PlayerController playerController = newCar.GetComponent<PlayerController>();
 
             CarConfiguration newConfiguration = new CarConfiguration();
@@ -202,12 +207,14 @@ public class SeedManager : MonoBehaviour
             }
             cars[i].RandomizePositions();
         }
+
+        isGamePlaying = true;
     }
 
     protected List<int> RandomizeArray(List<int> vector)
     {
         List<int> randomized = new List<int>();
-        for(int i = 0; i < vector.Count; i++)
+        while(vector.Count > 0)
         {
             int index = Random.Range(0,vector.Count);
             int value = vector[index];

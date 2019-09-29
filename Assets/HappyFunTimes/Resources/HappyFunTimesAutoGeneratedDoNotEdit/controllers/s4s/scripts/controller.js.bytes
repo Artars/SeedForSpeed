@@ -220,8 +220,10 @@ function handlePlaySound(data) {
 }
 
 function handleChangeAction(data) {
-  action0 = data.action0;
-  action1 = data.action1;
+  var action0 = data.action0;
+  var action1 = data.action1;
+
+  console.log("0: " + action0 + " 1: " + action1);
 
   buttons[0].setAction(action0);
   buttons[1].setAction(action1);
@@ -274,7 +276,7 @@ var Button = function() {
     this.press(false);
 
     this.setAction = function(newAction) {
-      element.innerHTML = "<div>" + actions + "</div>" + originalParams;
+      element.innerHTML = "<div>" + newAction + "</div>" + originalParams;
     }
   };
 }();

@@ -6,7 +6,7 @@ public class SeedPlayer : MonoBehaviour
 {
     [System.Serializable]
     public enum PlayerActions {
-        Left = 0, Right = 1, Accelerator = 2, Breake = 3, Scream = 4, None = 5, Start = 6
+        Left = 0, Right = 1, Accelerator = 2, Brake = 3, Scream = 4, None = 5, Start = 6
     }
 
     [System.Serializable]
@@ -27,7 +27,7 @@ public class SeedPlayer : MonoBehaviour
 
     public CurrentControls[] actions = new CurrentControls[]{
         new CurrentControls("Fire1"),
-        new CurrentControls("Jump")
+        new CurrentControls("Fire2")
     };
 
 
@@ -91,15 +91,36 @@ public class SeedPlayer : MonoBehaviour
 
     public void ProcessAction(CurrentControls action)
     {
-        bool state = _htfInput.GetKey(action.inputName);
+        bool state = _htfInput.GetButton(action.inputName);
+
+        Debug.Log(action.action.ToString() + " :" + _htfInput.GetButton(action.inputName));
         action.state = state;
         if((int) action.action < 4 && carController != null)
         {
-            
+            if(action.action == PlayerActions.Accelerator)
+            {
+                carController.inputReceiveAccel(state);
+            }
+            else if(action.action == PlayerActions.Brake)
+            {
+                carController.inputReceiveBrak(state);
+            }
+            else if(action.action == PlayerActions.Right)
+            {
+                carController.inputReceiveRight(state);
+            }
+            else if(action.action == PlayerActions.Left)
+            {
+                carController.inputReceiveLeft(state);
+            }
         }
-        else if(action.action == PlayerActions.Start)
+        else if(action.action == PlayerActions.Start && state)
         {
             SeedManager.instance.StartGame();
+        }
+        else if(action.action == PlayerActions.Scream && state)
+        {
+            Debug.Log("AAAAAAAAAAAAAAAAAAAA");
         }
     }
 }

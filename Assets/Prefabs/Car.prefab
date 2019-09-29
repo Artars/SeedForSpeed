@@ -185,7 +185,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   shouldMove: 1
   forDebug: 0
-  gamepadInput: 1
+  gamepadInput: 0
   isReversed: 0
 --- !u!114 &7730610165263736819
 MonoBehaviour:
