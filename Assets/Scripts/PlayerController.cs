@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     public bool gamepadInput = true;
     private bool haveCollided = false;
     public bool isReversed = false;
+
+    [Header("Sounds")]
+    public AudioSource slideSource;
     int accelerator;
     int brake;
     float turn;
@@ -157,6 +160,21 @@ public class PlayerController : MonoBehaviour
             if (speed > 0f && (brake == 0 || accelerator == 1)) speed = 0;
             if (!isOnWall && speed < -reversedMaxSpeed) speed = -reversedMaxSpeed;
             else if (isOnWall && speed < -reversedMaxSpeed*wallDebuff) speed = -reversedMaxSpeed*wallDebuff;
+        }
+
+        if(isDrifting && !haveCollided && !isReversed)
+        {
+            if(!slideSource.isPlaying)
+            {
+                slideSource.Play();
+            }
+        }
+        else
+        {
+            if(slideSource.isPlaying)
+            {
+                slideSource.Stop();
+            }
         }
     }
 
