@@ -53,9 +53,10 @@ public class CarCollision : MonoBehaviour
             }
         }
 
+        
         if(shouldPlaySound)
         {
-            crashSoundSource.Play();
+            PlaySound();
         }
     }
 
@@ -81,7 +82,10 @@ public class CarCollision : MonoBehaviour
 
     public void PlaySound()
     {
-        
+        if(crashSoundSource != null)
+        {
+            crashSoundSource.Play();
+        }
     }
 
     // void OnDrawGizmos()

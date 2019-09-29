@@ -19,7 +19,9 @@ public class BumpReaction : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Car"){
             Debug.Log("Scramble!!!");
-            if (SeedManager.instance != null) SeedManager.instance.ScrambleCarPlaces(other.GetComponent<PlayerController>().id);
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (SeedManager.instance != null) SeedManager.instance.ScrambleCarPlaces(player.id);
+            player.ReactBump();
         }
     }
 }
