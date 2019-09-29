@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     float turn;
     bool isDrifting = false;
     bool isOnWall = false;
-    float speed = 0f;
+    public float speed = 0f;
     Vector3 steering;
     Transform bodyPosition;
     Rigidbody body;

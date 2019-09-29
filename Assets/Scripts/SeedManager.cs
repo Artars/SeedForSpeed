@@ -231,5 +231,18 @@ public class SeedManager : MonoBehaviour
         return randomized;
     }
 
+    public void debugStartGame(int numCars = 1){
+        for(int i = 0; i < numCars; i++)
+        {
+            GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * i * 2, spawnPoint.rotation);
+            PlayerController playerController = newCar.GetComponent<PlayerController>();
+            playerController.id = i;
+            if (i == 0) playerController.gamepadInput = true;
 
+            CarConfiguration newConfiguration = new CarConfiguration();
+            newConfiguration.carController = playerController;
+
+            cars.Add(newConfiguration);
+        }
+    }
 }
