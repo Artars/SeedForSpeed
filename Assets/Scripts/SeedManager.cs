@@ -157,6 +157,10 @@ public class SeedManager : MonoBehaviour
         }
     }
 
+    public void ScrambleCarPlaces(int id){
+        if (id > -1 && id < cars.Count) cars[id].RandomizePositions();
+    }
+
     public void StartGame()
     {
         if(isGamePlaying) return;
@@ -170,6 +174,7 @@ public class SeedManager : MonoBehaviour
         {
             GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * i * 2, spawnPoint.rotation);
             PlayerController playerController = newCar.GetComponent<PlayerController>();
+            playerController.id = i;
 
             CarConfiguration newConfiguration = new CarConfiguration();
             newConfiguration.carController = playerController;
