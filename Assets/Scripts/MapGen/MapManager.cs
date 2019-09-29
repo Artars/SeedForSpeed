@@ -103,7 +103,10 @@ public class MapManager : MonoBehaviour{
                 }else if (dir == string.Empty && b.IsScenario()){
                     aux.Add(blockPrefab[i]);
                 }
+
             }
+            if (aux.Count == 0) Debug.Log (x + " " + y);
+
             b = Instantiate(aux[Random.Range(0, aux.Count)], this.transform).GetComponent<Block>();
             b.transform.localScale = Vector3.one * offset / b.size;
             b.transform.position = map[reference].transform.position + (Vector3.right * x + Vector3.forward * y) * offset;

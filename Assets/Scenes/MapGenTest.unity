@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0265b62b95499cf4cb99f138859a13bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: 1000
+  offset: 200
   mainBlock: 12
   bannedSequel1:
   - E
@@ -306,8 +306,10 @@ MonoBehaviour:
   - E
   map: []
   blockPrefab:
-  - {fileID: 2363510625585158276, guid: 235052fe3b288054785fbab1632e1ed0, type: 3}
+  - {fileID: 1676951198961345197, guid: bbf81a587033054438dfdcaf26bdcf9e, type: 3}
   - {fileID: 4871330192251108493, guid: ab661338b8dbc754f98e657e5bd0dad6, type: 3}
+  - {fileID: 4298071674830785923, guid: 869e8daaa8c2cc04c8a03caa9046ec52, type: 3}
+  - {fileID: 2363510625585158276, guid: 235052fe3b288054785fbab1632e1ed0, type: 3}
   car: {fileID: 1797304227}
 --- !u!4 &1553651363
 Transform:

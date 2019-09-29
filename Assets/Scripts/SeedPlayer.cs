@@ -51,8 +51,8 @@ public class SeedPlayer : MonoBehaviour
     public void Start()
     {
         _seedGamepad.OnDisconnect += OnDisconnect;
-        SeedManager.instance.AddPlayer(this);
         cuckatID = Random.Range(0, cuckatielCount);
+        SeedManager.instance.AddPlayer(this);
     }
 
     protected void OnDisconnect()
