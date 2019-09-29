@@ -7,6 +7,8 @@ public class Block : MonoBehaviour{
 
     public float size;
     public bool exitN, exitS, exitE, exitW;
+
+    public GameObject barrier;
     
     int index;
 
@@ -50,7 +52,7 @@ public class Block : MonoBehaviour{
     }
 
     public void Close(){
-        //this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
+        barrier.SetActive(true);
         exitE = false;
         exitW = false;
         exitN = false;
