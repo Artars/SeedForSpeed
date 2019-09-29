@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float maxSpeed = 400f;
-    public float reversedMaxSpeed = 200f;
+    public float reversedMaxSpeed = 100f;
     public float defaultAcceleration = 4f;
     public float brakeAcceleration = 6f;
     public float frictionAcceleration = 2f;
@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public bool shouldMove = true;
     public bool forDebug = false;
     private bool haveCollided = false;
-    private bool isReversed = false;
+    public bool isReversed = false;
     int accelerator;
     int brake;
     float turn;
@@ -46,6 +46,11 @@ public class PlayerController : MonoBehaviour
     public void reverseOn(){
         isReversed = true;
         brake = 1;
+    }
+
+    public void stop(){
+        accelerator = 0;
+        if (speed > 0) speed = 0;
     }
 
     public void turnLeft(float input){
@@ -101,7 +106,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!shouldMove) return;
         int isDrift = (isDrifting)?1:0;
-        steering = new Vector3(0f,turnAngle*turnCurve.Evaluate(speed/maxSpeed)+driftBuff*isDrift,0f);
+        steering = new Vector3(0f,turnAngle*turnCurve.Evaluate(Mathf.Abs(speed)/maxSpeed)+driftBuff*isDrift,0f);
         Vector3 newPosition = transform.position + speed * bodyPosition.forward * Time.fixedDeltaTime;
         Quaternion deltaRotation = Quaternion.Euler(turn * steering * Time.deltaTime);
         body.MoveRotation(body.rotation * deltaRotation);
