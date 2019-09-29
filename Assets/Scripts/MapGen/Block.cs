@@ -23,7 +23,7 @@ public class Block : MonoBehaviour{
     }
 
     public void Initialize(){
-        this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[Random.Range(0, colors.Length)];
+        //this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[Random.Range(0, colors.Length)];
     }
 
     public bool VerifyExit(string dir){
@@ -50,7 +50,7 @@ public class Block : MonoBehaviour{
     }
 
     public void Close(){
-        this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
+        //this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
         exitE = false;
         exitW = false;
         exitN = false;
