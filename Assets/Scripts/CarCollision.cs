@@ -34,7 +34,6 @@ public class CarCollision : MonoBehaviour
             if (Physics.Raycast(transform.position,transform.forward,wallDistance,LayerMask.GetMask("Parede"))) {
                 shouldPlaySound = true;
                 movementControl.GetComponent<PlayerController>().stop();
-                Debug.Log("Scramble!!!");
                 if(SeedManager.instance != null) 
                     SeedManager.instance.ScrambleCarPlaces(GetComponent<PlayerController>().id);
             }
@@ -66,6 +65,9 @@ public class CarCollision : MonoBehaviour
 
     void Update()
     {
+        if (Physics.Raycast(transform.position,-transform.forward,wallDistance,LayerMask.GetMask("Parede"))){
+            movementControl.stop();
+        }
         if (Physics.Raycast(transform.position,transform.forward,wallDistance,LayerMask.GetMask("Parede"))){
             movementControl.stop();
         }
@@ -88,8 +90,9 @@ public class CarCollision : MonoBehaviour
         }
     }
 
-    // void OnDrawGizmos()
-    // {
-    //     Gizmos.DrawRay(transform.position,transform.forward*wallDistance);
-    // }
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position,transform.forward*wallDistance);
+        Gizmos.DrawRay(transform.position,-transform.forward*wallDistance);
+    }
 }
