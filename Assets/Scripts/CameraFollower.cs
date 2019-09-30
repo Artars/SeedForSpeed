@@ -20,7 +20,7 @@ public class CameraFollower : MonoBehaviour
     bool isGoingX = true;
 
     public void setTarget(Transform newTarget){
-        toFollow = newTarget;
+        if (toFollow != newTarget) toFollow = newTarget;
         followedPlayer = toFollow.GetComponent<PlayerController>();
     }
 

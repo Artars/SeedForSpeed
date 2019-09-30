@@ -20,7 +20,7 @@ public class SeedManager : MonoBehaviour
 
     protected List<CarConfiguration> cars;
     public Transform initialPosition;
-    public QUICKFOLOWER follower;
+    // public QUICKFOLOWER follower;
 
 
     [System.Serializable]
@@ -174,6 +174,7 @@ public class SeedManager : MonoBehaviour
     {
         players = new List<SeedPlayer>();
         cars = new List<CarConfiguration>();
+        cameraFollower.setTarget(initialPosition);
     }
 
     public void AddPlayer(SeedPlayer player)
@@ -342,11 +343,11 @@ public class SeedManager : MonoBehaviour
                     winningAmount = cars[i].carController.seedCounter;
                 }
             }
-            // cameraFollower.SetTarget(cars[winningPlayer].carController.transform);
+            cameraFollower.setTarget(cars[winningPlayer].carController.transform);
             if(winningPlayer != -1)
             {
-            follower.target = cars[winningPlayer].carController.transform;
-            pivot.position = cars[winningPlayer].carController.transform.position;
+            // follower.target = cars[winningPlayer].carController.transform;
+            pivot = cars[winningPlayer].carController.transform;
 
             }
         }
@@ -354,8 +355,7 @@ public class SeedManager : MonoBehaviour
 
     public void StartGameOver()
     {
-        follower.target = initialPosition;
-        pivot.position = initialPosition.position;
+        cameraFollower.setTarget(initialPosition);
 
         isGamePlaying = false;
 
