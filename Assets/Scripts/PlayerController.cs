@@ -115,8 +115,7 @@ public class PlayerController : MonoBehaviour
 
     public void stop(){
         accelerator = 0;
-        speed = 0;
-        // if (Mathf.Abs(speed) > 0) speed = 0;
+        if (Mathf.Abs(speed) > 0) speed = 0;
     }
 
     public void wallTouching(){
