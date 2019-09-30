@@ -9,11 +9,12 @@ public class CarCollision : MonoBehaviour
     public AudioSource crashSoundSource;
     bool onWall = false;
     Vector3 lastTarget;
+    ContactPoint contact;
     PlayerController movementControl;
     void OnCollisionEnter(Collision collision)
     {
         bool shouldPlaySound = false;
-        ContactPoint contact = collision.GetContact(0);
+        contact = collision.GetContact(0);
         Rigidbody body1 = contact.thisCollider.GetComponent<Rigidbody>();
         Rigidbody body2 = contact.otherCollider.GetComponent<Rigidbody>();
         if (Vector3.Angle(Vector3.down,-contact.normal) < 10f) return;
@@ -23,12 +24,15 @@ public class CarCollision : MonoBehaviour
             float speed2 = contact.otherCollider.GetComponent<VelocityEstimator>().speed.magnitude;
 
             if (speed1 > speed2){
+                PlayerController player1 = GetComponent<PlayerController>();
                 PlayerController player2 = contact.otherCollider.GetComponent<PlayerController>();
                 if (player2 != null){
                     player2.disableMovement();
                     StartCoroutine(enableBackMovement(0.2f,player2));
                 }
                 body2.AddForceAtPosition(-contact.normal*(speed1-speed2)*repulsion,contact.point,ForceMode.Impulse);
+                player2.seedSteal();
+                player1.seedGain(player1.stealCounter);
             }
         }
         else if (contact.otherCollider.gameObject.tag != "Prop"){
@@ -66,15 +70,17 @@ public class CarCollision : MonoBehaviour
 
     void Update()
     {
+        if (onWall && Vector3.Angle(transform.forward,lastTarget) > 5f){
+            onWall = false;
+            movementControl.wallFree();
+        }
+        int reverseNumber = movementControl.isReversed?-1:1;
+        if (Vector3.Angle(reverseNumber*transform.forward,-contact.normal) > 10f) return;
         if (Physics.Raycast(transform.position+new Vector3(0f,0.5f,0f),-transform.forward,wallDistance,LayerMask.GetMask("Parede"))){
             movementControl.stop();
         }
         if (Physics.Raycast(transform.position+new Vector3(0f,0.5f,0f),transform.forward,wallDistance,LayerMask.GetMask("Parede"))){
             movementControl.stop();
-        }
-        if (onWall && Vector3.Angle(transform.forward,lastTarget) > 5f){
-            onWall = false;
-            movementControl.wallFree();
         }
     }
 

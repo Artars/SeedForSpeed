@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public int id;
-    public float maxSpeed = 400f;
-    public float reversedMaxSpeed = 100f;
-    public float defaultAcceleration = 4f;
-    public float brakeAcceleration = 6f;
-    public float frictionAcceleration = 2f;
-    public float collisionAcceleration = 800f;
-    public float turnAngle = 80f;
-    public float driftBuff = 30f;
+    public float maxSpeed = 30f;
+    public float reversedMaxSpeed = 15f;
+    public float defaultAcceleration = 0.2f;
+    public float brakeAcceleration = 0.4f;
+    public float frictionAcceleration = 0.05f;
+    public float collisionAcceleration = 40f;
+    public float turnAngle = 120f;
+    public float driftBuff = 60f;
     public float wallDebuff = 0.5f;
     public AnimationCurve turnCurve;
     public bool shouldMove = true;
@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     public bool isReversed = false;
     public bool loser = false;
     public int seedCounter = 100;
-    public int seedDrain = 5;
+    public int seedDrain = 1;
+    public int stealCounter = 20;
     int accelerator;
     int brake;
     float turn;
@@ -77,8 +78,8 @@ public class PlayerController : MonoBehaviour
         bool accel = accelerator == 1;
         brake = 0;
         if (brak) brakeOn();
-        if (brak && !accel && speed < 10) reverseOn();
-        if (!brak && speed > -10) isReversed = false;
+        if (brak && !accel && speed < 0.1) reverseOn();
+        if (!brak && speed > -0.1) isReversed = false;
     }
 
     public void inputReceiveRight(bool right){
@@ -116,6 +117,7 @@ public class PlayerController : MonoBehaviour
     public void stop(){
         accelerator = 0;
         if (Mathf.Abs(speed) > 0) speed = 0;
+        Debug.Log("Teste");
     }
 
     public void wallTouching(){
@@ -133,6 +135,10 @@ public class PlayerController : MonoBehaviour
 
     public void seedDrainSet(int x){
         seedDrain = x;
+    }
+
+    public void seedSteal (){
+        seedCounter -= stealCounter;
     }
 
     void seedDepletion(){
@@ -155,17 +161,17 @@ public class PlayerController : MonoBehaviour
             turn = 0;
             if (Input.GetButton("Fire1")) acceleratorOn();
             if (Input.GetButton("Fire2")) brakeOn();
-            if (Input.GetButton("Fire2") && accelerator == 0 && speed < 10) reverseOn();
+            if (Input.GetButton("Fire2") && accelerator == 0 && speed < 0.1) reverseOn();
             // if (Input.GetKey(KeyCode.W)) acceleratorOn();
             // if (Input.GetKey(KeyCode.S)) brakeOn();
-            // if (Input.GetKey(KeyCode.S) && accelerator == 0 && speed < 10) reverseOn();
+            // if (Input.GetKey(KeyCode.S) && accelerator == 0 && speed < 0.1) reverseOn();
             float aux = Input.GetAxis("Horizontal");
             if (aux>0) turnRight(aux);
             else if (aux<0) turnLeft(aux);
-            if (brake == 0 && speed > -10) isReversed = false;
+            if (brake == 0 && speed > -0.1) isReversed = false;
         }
 
-        isDrifting = (accelerator == 1 && brake == 1 && speed > 10);
+        isDrifting = (accelerator == 1 && brake == 1 && speed > 0.1);
         if (!isDrifting && !isReversed && !haveCollided){
             if (accelerator == 1) speed += defaultAcceleration;
             if (speed > 0f){
@@ -232,7 +238,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator collisionStop(){
         while (haveCollided){
             body.AddForce(-body.velocity.normalized*collisionAcceleration,ForceMode.Acceleration);
-            if(body.velocity.magnitude <= 10) {
+            if(body.velocity.magnitude <= 0.1) {
                 haveCollided = false;
                 shouldMove = true;
                 isReversed = false;

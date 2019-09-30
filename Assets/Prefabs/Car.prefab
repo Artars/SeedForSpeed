@@ -447,11 +447,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  maxSpeed: 40
-  reversedMaxSpeed: 20
+  maxSpeed: 30
+  reversedMaxSpeed: 15
   defaultAcceleration: 0.2
   brakeAcceleration: 0.4
-  frictionAcceleration: 0.1
+  frictionAcceleration: 0.05
   collisionAcceleration: 40
   turnAngle: 120
   driftBuff: 60
