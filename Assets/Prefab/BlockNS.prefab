@@ -334,11 +334,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -12.459999
       objectReference: {fileID: 0}
-    - target: {fileID: 7180519344555979364, guid: 9bb74f8841f10ed4da3a10d238640257,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7180519344328109033, guid: 9bb74f8841f10ed4da3a10d238640257,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -353,11 +348,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 47.52
-      objectReference: {fileID: 0}
-    - target: {fileID: 7180519345234827255, guid: 9bb74f8841f10ed4da3a10d238640257,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7180519343653162773, guid: 9bb74f8841f10ed4da3a10d238640257,
         type: 3}
@@ -474,6 +464,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 34997858957603181}
     m_Modifications:
+    - target: {fileID: 100000, guid: d9de10457ce58994b992235462adac71, type: 3}
+      propertyPath: m_Name
+      value: BarreiraPulissa
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: d9de10457ce58994b992235462adac71, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d9de10457ce58994b992235462adac71, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.023167111
@@ -530,14 +528,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 9.43451
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: d9de10457ce58994b992235462adac71, type: 3}
-      propertyPath: m_Name
-      value: BarreiraPulissa
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: d9de10457ce58994b992235462adac71, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9de10457ce58994b992235462adac71, type: 3}
 --- !u!1 &3618364161074659839 stripped
@@ -559,6 +549,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 34997858957603181}
     m_Modifications:
+    - target: {fileID: 100000, guid: d9de10457ce58994b992235462adac71, type: 3}
+      propertyPath: m_Name
+      value: BarreiraPulissa (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: d9de10457ce58994b992235462adac71, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d9de10457ce58994b992235462adac71, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.023167111
@@ -614,14 +612,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: d9de10457ce58994b992235462adac71, type: 3}
       propertyPath: m_LocalScale.z
       value: 9.43451
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: d9de10457ce58994b992235462adac71, type: 3}
-      propertyPath: m_Name
-      value: BarreiraPulissa (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: d9de10457ce58994b992235462adac71, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9de10457ce58994b992235462adac71, type: 3}
