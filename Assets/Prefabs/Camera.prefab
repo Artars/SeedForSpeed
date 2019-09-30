@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6281164195378031128}
   - component: {fileID: 6281164195378031111}
   m_Layer: 0
-  m_Name: Camera 1
+  m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toFollow: {fileID: 0}
-  offsetOnX: {x: 0, y: 30, z: -12}
-  offsetOnZ: {x: 0, y: 30, z: -18}
+  offsetOnX: {x: 0, y: 30, z: -1}
+  offsetOnZ: {x: 0, y: 30, z: -7}
   speedZoomOut: 10
   speedOffset: -15

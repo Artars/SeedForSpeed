@@ -174,7 +174,7 @@ public class SeedManager : MonoBehaviour
     {
         players = new List<SeedPlayer>();
         cars = new List<CarConfiguration>();
-        cameraFollower.setTarget(initialPosition);
+        cameraFollower.setTarget(initialPosition.transform);
     }
 
     public void AddPlayer(SeedPlayer player)
