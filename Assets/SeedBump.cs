@@ -5,6 +5,8 @@ using UnityEngine;
 public class SeedBump : MonoBehaviour
 {
     public int seeds = 20;
+    public Transform seedIcon, arrow;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +16,8 @@ public class SeedBump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        seedIcon.forward = Vector3.forward;
+        arrow.forward = Vector3.forward;
     }
 
     private void OnTriggerEnter(Collider other) {
