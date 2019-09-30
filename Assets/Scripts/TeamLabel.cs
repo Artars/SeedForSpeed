@@ -7,7 +7,7 @@ public class TeamLabel : MonoBehaviour
 {
     
     public Image icon;
-    public TMPro.TMP_Text label;
+    public TMPro.TMP_Text label, msg;
 
     public Image bg;
     
@@ -37,6 +37,20 @@ public class TeamLabel : MonoBehaviour
         icon.sprite = death;
         label.text = Mathf.Round(time).ToString("F2") + "s";
         bg.color = Color.black;
+    }
+
+    public void ControlChange(){
+        CancelInvoke();
+        icon.gameObject.SetActive(false);
+        label.gameObject.SetActive(false);
+        msg.gameObject.SetActive(true);
+        Invoke("EraseMsg", 2.0f);
+    }
+
+    void EraseMsg(){
+        icon.gameObject.SetActive(true);
+        label.gameObject.SetActive(true);
+        msg.gameObject.SetActive(false);
     }
 
 
