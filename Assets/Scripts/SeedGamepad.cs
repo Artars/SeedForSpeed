@@ -17,6 +17,17 @@ public class SeedGamepad : HFTGamepad
         }
     }
 
+    [System.Serializable]
+    public class MessageAction
+    {
+        public string message;
+
+        public MessageAction(string message)
+        {
+            this.message = message;
+        }
+    }
+
     public void SetActions(string action0, string action1)
     {
         m_netPlayer.SendCmd("changeAction", new ButtonAction(action0,action1));
@@ -27,4 +38,10 @@ public class SeedGamepad : HFTGamepad
         this.Color = color;
         SendColor();
     }
+
+    public void DisplayMessage(string message)
+    {
+        m_netPlayer.SendCmd("displayMessage", new MessageAction(message));
+    }
+
 }
