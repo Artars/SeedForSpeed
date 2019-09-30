@@ -58,7 +58,7 @@ public class CameraFollower : MonoBehaviour
             nextPosition -= usedZoomOut*transform.forward;
             transform.position = nextPosition;
         }
-        else{
+        else if (toFollow != null){
             transform.position = offsetOnZ+toFollow.position;
         }
     }

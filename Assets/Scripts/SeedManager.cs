@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SeedManager : MonoBehaviour
 {
@@ -349,20 +350,25 @@ public class SeedManager : MonoBehaviour
             {
             cameraFollower.setTarget(cars[winningPlayer].carController.transform);
             // follower.target = cars[winningPlayer].carController.transform;
-            pivot = cars[winningPlayer].carController.transform;
+            pivot.position = cars[winningPlayer].carController.transform.position;
 
+            } else {
+                Debug.Log("caraio");
             }
         }
     }
 
     public void StartGameOver()
     {
-        cameraFollower.setTarget(initialPosition);
+        //cameraFollower.setTarget(initialPosition);
+        //pivot.position = initialPosition.position;
 
-        isGamePlaying = false;
+        //isGamePlaying = false;
 
-        players[0].SetActions(SeedPlayer.PlayerActions.Scream,SeedPlayer.PlayerActions.Start);
+        //players[0].SetActions(SeedPlayer.PlayerActions.Scream,SeedPlayer.PlayerActions.Start);
         
-        uIManager.ResetGame();
+        //uIManager.ResetGame();
+
+        SceneManager.LoadScene(0);
     }
 }
