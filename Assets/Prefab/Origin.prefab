@@ -156,7 +156,7 @@ MonoBehaviour:
   - {fileID: 4549643676304380608}
   - {fileID: 3227069537453500498}
   seedCar: {fileID: 0}
-  seedChance: 0.7
+  isOrigin: 1
 --- !u!1 &8770420156961849048
 GameObject:
   m_ObjectHideFlags: 0
