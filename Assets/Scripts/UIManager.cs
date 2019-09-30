@@ -49,13 +49,15 @@ public class UIManager : MonoBehaviour
     public void StartGame(List<SeedManager.CarConfiguration> controllers)
     {
         team = controllers;
-        presentationParent.gameObject.SetActive(false);
+        presentationParent.parent.gameObject.SetActive(false);
         teamParent.gameObject.SetActive(true);
+
+        teamCounter.Clear();
 
         for (int i = 0; i < controllers.Count; i++)
         {
             GameObject toAssingn = GameObject.Instantiate(teamPrefab);
-            Image image = toAssingn.GetComponentInChildren<Image>();
+            Image image = toAssingn.GetComponent<Image>();
             image.color = team[i].carController.currentColor;
             
             TMPro.TMP_Text text = toAssingn.GetComponentInChildren<TMPro.TMP_Text>();
