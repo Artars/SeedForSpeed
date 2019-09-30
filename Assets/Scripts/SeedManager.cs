@@ -346,7 +346,7 @@ public class SeedManager : MonoBehaviour
             if(winningPlayer != -1)
             {
             follower.target = cars[winningPlayer].carController.transform;
-            pivot = cars[winningPlayer].carController.transform;
+            pivot.position = cars[winningPlayer].carController.transform.position;
 
             }
         }
@@ -355,6 +355,7 @@ public class SeedManager : MonoBehaviour
     public void StartGameOver()
     {
         follower.target = initialPosition;
+        pivot.position = initialPosition.position;
 
         isGamePlaying = false;
 

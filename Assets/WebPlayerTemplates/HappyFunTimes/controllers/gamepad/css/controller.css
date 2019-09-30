@@ -170,6 +170,7 @@ svg, img {
 .layout-1button #lrpad          { display: none; }
 .layout-1button #touch          { display: none; }
 .layout-1button #orient         { display: none; }
+.layout-1button #message         { display: none; }
 
 .layout-2button #dpad1          { display: none; }
 .layout-2button #dpad2          { display: none; }
@@ -178,6 +179,7 @@ svg, img {
 .layout-2button #lrpad          { display: none; }
 .layout-2button #touch          { display: none; }
 .layout-2button #orient         { display: none; }
+.layout-2button #message         { display: none; }
 
 .layout-1dpad-1button #dpad1    { left: 70px; width: 160px; height: 160px; }
 .layout-1dpad-1button #dpad2    { display: none; }
@@ -242,6 +244,15 @@ svg, img {
 .layout-touch #lrpad           { display: none; }
 .layout-touch #touch           { display: block; }
 .layout-touch #orient          { display: none; }
+
+.layout-message #dpad1           { display: none; }
+.layout-message #dpad2           { display: none; }
+.layout-message #buttonA         { display: none; }
+.layout-message #buttonB         { display: none; }
+.layout-message #lrpad           { display: none; }
+.layout-message #touch           { display: none; }
+.layout-message #orient          { display: none; }
+.layout-message #message         { display: block; }
 
 .layout-orient #dpad1           { display: none; }
 .layout-orient #dpad2           { display: none; }

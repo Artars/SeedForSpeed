@@ -16,19 +16,26 @@ public class UIManager : MonoBehaviour
 
     public GameObject teamPrefab;
     public Transform teamParent;
+    public GameObject startScreenPanel;
+
+    [Range(0,1)]
+    public float alphaTeam = 0.8f;
 
     public void Start()
     {
         playerImages = new Dictionary<SeedPlayer, GameObject>();
         team = new List<SeedManager.CarConfiguration>();
         teamCounter = new Dictionary<int, TMPro.TMP_Text>();
+        startScreenPanel.SetActive(true);
     }
 
     public void AddPlayer(SeedPlayer player)
     {
         GameObject newImage = GameObject.Instantiate(prefabImage);
-        newImage.transform.parent = (presentationParent);
-        newImage.GetComponent<Image>().sprite = sprites[player.cuckatID];
+        newImage.transform.SetParent(presentationParent);
+        Image imageRef = newImage.GetComponentInChildren<Image>();
+        if(imageRef == null) imageRef = newImage.GetComponentInChildren<Image>();
+        imageRef.sprite = sprites[player.cuckatID];
         newImage.SetActive(true);
 
         playerImages.Add(player, newImage);
@@ -49,7 +56,7 @@ public class UIManager : MonoBehaviour
     public void StartGame(List<SeedManager.CarConfiguration> controllers)
     {
         team = controllers;
-        presentationParent.parent.gameObject.SetActive(false);
+        startScreenPanel.SetActive(false);
         teamParent.gameObject.SetActive(true);
 
         teamCounter.Clear();
@@ -58,7 +65,9 @@ public class UIManager : MonoBehaviour
         {
             GameObject toAssingn = GameObject.Instantiate(teamPrefab);
             Image image = toAssingn.GetComponent<Image>();
-            image.color = team[i].carController.currentColor;
+            Color teamColor = team[i].carController.currentColor;
+            teamColor.a = alphaTeam;
+            image.color = teamColor;
             
             TMPro.TMP_Text text = toAssingn.GetComponentInChildren<TMPro.TMP_Text>();
 
@@ -75,7 +84,14 @@ public class UIManager : MonoBehaviour
         {
             for (int i = 0; i < team.Count; i++)
             {
-                teamCounter[i].text = team[i].carController.seedCounter.ToString();
+                if(team[i].carController != null)
+                {
+                    teamCounter[i].text = team[i].carController.seedCounter.ToString();
+                }
+                else
+                {
+                    teamCounter[i].transform.parent.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -83,7 +99,7 @@ public class UIManager : MonoBehaviour
     public void ResetGame()
     {
         isGamePlaying = false;
-        presentationParent.gameObject.SetActive(true);
+        startScreenPanel.SetActive(true);
         teamParent.gameObject.SetActive(false);
 
         foreach(var element in teamCounter)

@@ -122,6 +122,10 @@ var layouts = {
     orientation: "portrait",
     orientationOptional: true,
   },
+  "message": {
+    orientation: "portrait",
+    orientationOptional: true,
+  },
 };
 
 function to255(v) {
@@ -229,6 +233,13 @@ function handleChangeAction(data) {
   buttons[1].setAction(action1);
 }
 
+function handleChangeMessage(data) {
+  var message = data.message;
+
+  element = $("message-Text");
+  element.innerHTML = message;
+}
+
 client.addEventListener('color', handleColor);
 client.addEventListener('options', handleOptions);
 client.addEventListener('full', handleFull);
@@ -236,6 +247,7 @@ client.addEventListener('play', handlePlay);
 client.addEventListener('loadSounds', handleLoadSounds);
 client.addEventListener('playSound', handlePlaySound);
 client.addEventListener('changeAction', handleChangeAction);
+client.addEventListener('displayMessage', handleChangeMessage);
 
 // This way of making buttons probably looks complicated but
 // it lets us easily make more buttons.
@@ -259,7 +271,7 @@ var Button = function() {
   return function Button(id, options, actions = "No") {
     var element = $(id);
     var pressed = false;
-    action = actions
+    action = actions;
     svgSrc = $("button-img" + "-" + action).text + $("button-pressed"+ "-" + action).text;
 
     element.innerHTML = strings.replaceParams(svgSrc, options);
