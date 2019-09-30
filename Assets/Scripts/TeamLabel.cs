@@ -26,12 +26,14 @@ public class TeamLabel : MonoBehaviour
     }
 
     public void Reset(Color c){
+        icon.color = Color.white;
         icon.sprite = seed;
         label.text = "0";
         bg.color = c;
     }
 
     public void Kill(float time){
+        icon.color = bg.color;
         icon.sprite = death;
         label.text = Mathf.Round(time).ToString("F2") + "s";
         bg.color = Color.black;

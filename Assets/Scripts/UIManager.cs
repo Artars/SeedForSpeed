@@ -105,7 +105,7 @@ public class UIManager : MonoBehaviour
 
         foreach(var element in teamCounter)
         {
-            Destroy(element.Value.transform.parent.gameObject);
+            Destroy(element.Value.gameObject);
         }
     }
 }
