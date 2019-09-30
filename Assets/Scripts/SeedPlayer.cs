@@ -41,6 +41,8 @@ public class SeedPlayer : MonoBehaviour
 
     public Cuckatiel cuckatiel;
 
+    protected bool hasMessage = false;
+
     public void Awake()
     {
         _seedGamepad = GetComponent<SeedGamepad>();
@@ -138,6 +140,11 @@ public class SeedPlayer : MonoBehaviour
         {
             isScreaming = state;
         }
+    }
+
+    public void DisplayMessage(string message)
+    {
+        
     }
 
     protected void UpdateScream()
