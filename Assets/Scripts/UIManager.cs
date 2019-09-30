@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     protected Dictionary<SeedPlayer,GameObject> playerImages;
     public bool isGamePlaying;
 
-    public Dictionary<int,TMPro.TMP_Text> teamCounter;
+    public Dictionary<int,TeamLabel> teamCounter;
     public List<SeedManager.CarConfiguration> team;
 
     public GameObject teamPrefab;
@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     {
         playerImages = new Dictionary<SeedPlayer, GameObject>();
         team = new List<SeedManager.CarConfiguration>();
-        teamCounter = new Dictionary<int, TMPro.TMP_Text>();
+        teamCounter = new Dictionary<int, TeamLabel>();
         startScreenPanel.SetActive(true);
     }
 
@@ -64,14 +64,15 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < controllers.Count; i++)
         {
             GameObject toAssingn = GameObject.Instantiate(teamPrefab);
-            Image image = toAssingn.GetComponent<Image>();
+            //Image image = toAssingn.GetComponent<Image>();
             Color teamColor = team[i].carController.currentColor;
             teamColor.a = alphaTeam;
-            image.color = teamColor;
             
-            TMPro.TMP_Text text = toAssingn.GetComponentInChildren<TMPro.TMP_Text>();
+            TeamLabel label = toAssingn.GetComponent<TeamLabel>();
+            label.Reset(teamColor);
+            //TMPro.TMP_Text text = toAssingn.GetComponentInChildren<TMPro.TMP_Text>();
 
-            teamCounter.Add(i,text);
+            teamCounter.Add(i,label);
             toAssingn.SetActive(true);
             toAssingn.transform.SetParent(teamParent);
         }
@@ -86,11 +87,11 @@ public class UIManager : MonoBehaviour
             {
                 if(team[i].carController != null)
                 {
-                    teamCounter[i].text = team[i].carController.seedCounter.ToString();
+                    teamCounter[i].label.text = team[i].carController.seedCounter.ToString();
                 }
                 else
                 {
-                    teamCounter[i].transform.parent.gameObject.SetActive(false);
+                    //teamCounter[i].transform.parent.gameObject.SetActive(false);
                 }
             }
         }

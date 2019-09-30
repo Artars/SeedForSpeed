@@ -22,6 +22,7 @@ public class SeedManager : MonoBehaviour
     public Transform initialPosition;
     // public QUICKFOLOWER follower;
 
+    float startTime = 0.0f;
 
     [System.Serializable]
     public class CarConfiguration
@@ -213,6 +214,7 @@ public class SeedManager : MonoBehaviour
         cars[id].RemovePlayers();
         Destroy(cars[id].carController.gameObject);
         cars[id].carController = null;
+        uIManager.teamCounter[id].Kill(Time.time - startTime);
 
         bool hasEnded = true;
         for (int i = 0; i < cars.Count; i++)
@@ -223,7 +225,7 @@ public class SeedManager : MonoBehaviour
         if(hasEnded) 
         {
             gameOver = true;
-            StartGameOver();
+            Invoke("StartGameOver", 2.0f);
             Debug.Log("Game over");
         }
         Debug.Log("Removed " + id);
@@ -236,7 +238,7 @@ public class SeedManager : MonoBehaviour
     public void StartGame()
     {
         if(isGamePlaying) return;
-
+        startTime = Time.time;
         int numCars = Mathf.CeilToInt(players.Count/4.0f);
 
         cars.Clear();
@@ -343,9 +345,9 @@ public class SeedManager : MonoBehaviour
                     winningAmount = cars[i].carController.seedCounter;
                 }
             }
-            cameraFollower.setTarget(cars[winningPlayer].carController.transform);
             if(winningPlayer != -1)
             {
+            cameraFollower.setTarget(cars[winningPlayer].carController.transform);
             // follower.target = cars[winningPlayer].carController.transform;
             pivot = cars[winningPlayer].carController.transform;
 
