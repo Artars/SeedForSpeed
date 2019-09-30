@@ -25,7 +25,7 @@ public class ObstacleActivator : MonoBehaviour
             }
             i++;
         }
-        if (Random.Range(0,1)<seedChance) seedCar.SetActive(true);
+        if (Random.Range(0,1)<seedChance && seedCar != null) seedCar.SetActive(true);
     }
 
     // Update is called once per frame
