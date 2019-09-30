@@ -12,6 +12,7 @@ public class SeedManager : MonoBehaviour
     public Transform spawnPoint;
     public bool gameOver = false;
     public Color[] colors = new Color[] {Color.red,Color.blue,Color.yellow};
+    public string[] colorsName = new string[] {"Red","Blue","Yellow"};
     public GameObject cuckatielPrefab;
     public CameraFollower cameraFollower;
 
@@ -28,6 +29,9 @@ public class SeedManager : MonoBehaviour
     [System.Serializable]
     public class CarConfiguration
     {
+        public int id = -1;
+        public Color color;
+        public string colorName;
         public List<SeedPlayer> players;
         public PlayerController carController;
         protected Dictionary<SeedPlayer.PlayerActions,SeedPlayer> assigmentPlayers;
@@ -38,7 +42,8 @@ public class SeedManager : MonoBehaviour
         {
             players.Add(player);
             player.carController = carController;
-            player.SetColor(player.carController.currentColor);            
+            player.SetColor(player.carController.currentColor);      
+            player.carId = id;
         }
 
         public void AddCuckatiel(Cuckatiel c, SeedPlayer sp)
@@ -50,10 +55,17 @@ public class SeedManager : MonoBehaviour
         {
             players.Remove(player);
             player.carController = null;
+            player.carId = -1;
 
             if(player.gameObject != null)
             {
-                player.SetActions(SeedPlayer.PlayerActions.Scream);
+                player.SetColor(Color.grey);
+                player.DisplayMessage("Your " + colorName + " car was arrested!");
+            }
+            if(cuckatiels.ContainsKey(player))
+            {
+                Destroy(cuckatiels[player]);
+                cuckatiels.Remove(player);
             }
         }
 
@@ -182,13 +194,26 @@ public class SeedManager : MonoBehaviour
     public void AddPlayer(SeedPlayer player)
     {
         players.Add(player);
-        if(players.Count == 1)
+        if(!isGamePlaying)
         {
-            player.SetActions(SeedPlayer.PlayerActions.Scream ,SeedPlayer.PlayerActions.Start);
+            if(players.Count == 1)
+            {
+                player.DisplayMessage("You can't play alone!");
+                // player.SetActions(SeedPlayer.PlayerActions.Scream ,SeedPlayer.PlayerActions.Start);
+            }
+            else if(players.Count == 2)
+            {
+                players[0].SetActions(SeedPlayer.PlayerActions.Scream ,SeedPlayer.PlayerActions.Start);
+                player.SetActions(SeedPlayer.PlayerActions.Scream);            
+            }
+            else
+            {
+                player.SetActions(SeedPlayer.PlayerActions.Scream);
+            }
         }
         else
         {
-            player.SetActions(SeedPlayer.PlayerActions.Scream);
+            player.DisplayMessage("Wait for match to end!");
         }
 
         uIManager.AddPlayer(player);
@@ -199,11 +224,31 @@ public class SeedManager : MonoBehaviour
         players.Remove(player);
         if(!isGamePlaying)
         {
-            if(player.actions[1].action == SeedPlayer.PlayerActions.Start)
+            if(players.Count == 1)
             {
-                if(players.Count > 0)
+                players[0].DisplayMessage("You can't play alone!");
+            }
+            else if(player.actions[1].action == SeedPlayer.PlayerActions.Start)
+            {
+                if(players.Count > 1)
                 {
                     players[0].SetActions(SeedPlayer.PlayerActions.Scream ,SeedPlayer.PlayerActions.Start);
+                }
+            }
+        }
+        else
+        {
+            int carId = player.carId;
+            if(carId != -1)
+            {
+                cars[carId].RemovePlayer(player);
+                if(cars[carId].players.Count < 2)
+                {
+                    cars[carId].carController.seedCounter = 0;
+                }
+                else
+                {
+                    cars[carId].RandomizePositions();
                 }
             }
         }
@@ -304,7 +349,9 @@ public class SeedManager : MonoBehaviour
 
         CarConfiguration newConfiguration = new CarConfiguration();
         newConfiguration.carController = playerController;
-        
+        newConfiguration.id = index;
+        newConfiguration.color = colors[index];
+        newConfiguration.colorName = colorsName[index];
 
         cars.Add(newConfiguration);
     }

@@ -36,6 +36,7 @@ public class SeedPlayer : MonoBehaviour
     protected SeedGamepad _seedGamepad;
     bool isScreaming = false;
     
+    public int carId = -1;
     public int cuckatielCount = 7;
     public int cuckatID = 0;
 
@@ -144,7 +145,8 @@ public class SeedPlayer : MonoBehaviour
 
     public void DisplayMessage(string message)
     {
-        
+        _seedGamepad.controllerOptions.controllerType = HFTGamepad.ControllerType.c_hello;
+        _seedGamepad.DisplayMessage(message); 
     }
 
     protected void UpdateScream()

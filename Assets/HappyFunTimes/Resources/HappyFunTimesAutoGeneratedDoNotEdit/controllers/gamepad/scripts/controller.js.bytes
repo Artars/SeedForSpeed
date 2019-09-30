@@ -122,7 +122,7 @@ var layouts = {
     orientation: "portrait",
     orientationOptional: true,
   },
-  "message": {
+  "hello": {
     orientation: "portrait",
     orientationOptional: true,
   },
@@ -158,6 +158,7 @@ function handleOptions(data) {
   // names in C# are c_pads_buttons but names here are pads-buttons.
   // that's basically because I wrote the JS first. I could fix all the JS and CSS to match the C# but I'm lazy.
   controllerType = (controllerType || "").replace(/s/g, "").replace("c_", "").replace(/_/g, '-').toLowerCase();  // remove 's' so buttons -> button, dpads -> dpad
+  console.log("Was sent: " + controllerType);
   if (!(controllerType in layouts)) {
     if (controllerType) {
       client.error("unknown controller type: " + controllerType);
@@ -165,6 +166,7 @@ function handleOptions(data) {
     }
     controllerType = "1dpad-2button";
   }
+  console.log("Controller used: " + controllerType);
   var elem = $("buttons");
   var classes = elem.className.split(/[ \t\n]+/);
   classes = classes.filter(notLayout);
@@ -236,7 +238,7 @@ function handleChangeAction(data) {
 function handleChangeMessage(data) {
   var message = data.message;
 
-  element = $("message-Text");
+  var element = $("hello-Text");
   element.innerHTML = message;
 }
 
