@@ -131,7 +131,7 @@ public class MapManager : MonoBehaviour{
     void Update(){
         Vector3 distance = car.position - map[mainBlock].transform.position;
     
-        if(distance.magnitude >= offset / 1.5f){
+        if(distance.magnitude >= offset / 1.7f){
             float angle = Vector3.Angle(map[mainBlock].transform.forward, distance);
 
             if (angle < 45.0f){
