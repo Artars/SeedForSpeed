@@ -245,8 +245,8 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnBecameInvisible() {
-        loser = true;
-        SeedManager.instance.RemoveCar(id);
+        //loser = true;
+        //SeedManager.instance.RemoveCar(id);
     }
     IEnumerator collisionStop(){
         while (haveCollided){

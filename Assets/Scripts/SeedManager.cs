@@ -20,6 +20,10 @@ public class SeedManager : MonoBehaviour
 
     public UIManager uIManager;
 
+    public AudioSource playerDeath;
+
+    public float maxDistance;
+
     protected List<CarConfiguration> cars;
     public Transform initialPosition;
     // public QUICKFOLOWER follower;
@@ -194,6 +198,7 @@ public class SeedManager : MonoBehaviour
     public void AddPlayer(SeedPlayer player)
     {
         players.Add(player);
+        player.SetColor(Color.grey);
         if(!isGamePlaying)
         {
             if(players.Count == 1)
@@ -261,6 +266,7 @@ public class SeedManager : MonoBehaviour
         Destroy(cars[id].carController.gameObject);
         cars[id].carController = null;
         uIManager.teamCounter[id].Kill(Time.time - startTime);
+        playerDeath.Play();
 
         bool hasEnded = true;
         for (int i = 0; i < cars.Count; i++)
@@ -292,7 +298,11 @@ public class SeedManager : MonoBehaviour
     {
         if(isGamePlaying) return;
         startTime = Time.time;
-        int numCars = Mathf.CeilToInt(players.Count/4.0f);
+        int numCars = 1;
+        if (players.Count > 1){
+            numCars = Mathf.FloorToInt(players.Count/2.0f);
+            if (numCars > 5) numCars = 5;
+        }
 
         cars.Clear();
         
@@ -349,7 +359,7 @@ public class SeedManager : MonoBehaviour
 
     protected void InstantiateCar(int index)
     {
-        GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * index * 2, spawnPoint.rotation);
+        GameObject newCar = GameObject.Instantiate(carPrefab, spawnPoint.position + spawnPoint.right * index * 5, spawnPoint.rotation);
         PlayerController playerController = newCar.GetComponent<PlayerController>();
         playerController.id = index;
         playerController.SetCarColor(colors[index]);
@@ -402,10 +412,13 @@ public class SeedManager : MonoBehaviour
             int winningAmount = 0;
             for (int i = 0; i < cars.Count; i++)
             {
-                if(cars[i].carController != null && cars[i].carController.seedCounter > winningAmount)
+                if(cars[i].carController != null && cars[i].carController.seedCounter >= winningAmount)
                 {
-                    winningPlayer = i;
-                    winningAmount = cars[i].carController.seedCounter;
+                    if (winningPlayer == -1 || cars[i].carController.seedCounter != winningAmount ||
+                        cars[i].carController.transform.position.z > cars[winningPlayer].carController.transform.position.z){
+                        winningPlayer = i;
+                        winningAmount = cars[i].carController.seedCounter;
+                    }
                 }
             }
             if(winningPlayer != -1)
@@ -414,8 +427,12 @@ public class SeedManager : MonoBehaviour
             // follower.target = cars[winningPlayer].carController.transform;
             pivot.position = cars[winningPlayer].carController.transform.position;
 
-            } else {
-                Debug.Log("caraio");
+            for (int i = 0; i < cars.Count; i++)
+            {
+                if ((cars[i].carController.transform.position - cars[winningPlayer].carController.transform.position).magnitude > maxDistance)
+                    RemoveCar(i);
+            }
+
             }
         }
     }

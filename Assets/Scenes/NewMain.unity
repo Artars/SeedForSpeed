@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -264,6 +264,7 @@ MonoBehaviour:
   cameraFollower: {fileID: 2100518816}
   pivot: {fileID: 1434714342}
   uIManager: {fileID: 1148692133}
+  maxDistance: 38
   initialPosition: {fileID: 408034323}
 --- !u!114 &610603392
 MonoBehaviour:

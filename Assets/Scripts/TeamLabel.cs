@@ -33,18 +33,21 @@ public class TeamLabel : MonoBehaviour
     }
 
     public void Kill(float time){
+        EraseMsg();
         icon.color = bg.color;
         icon.sprite = death;
-        label.text = Mathf.Round(time).ToString("F2") + "s";
+        label.text = Mathf.Round(time).ToString("F0") + "s";
         bg.color = Color.black;
     }
 
     public void ControlChange(){
-        CancelInvoke();
-        icon.gameObject.SetActive(false);
-        label.gameObject.SetActive(false);
-        msg.gameObject.SetActive(true);
-        Invoke("EraseMsg", 2.0f);
+        if (bg.color != Color.black){
+            CancelInvoke();
+            icon.gameObject.SetActive(false);
+            label.gameObject.SetActive(false);
+            msg.gameObject.SetActive(true);
+            Invoke("EraseMsg", 2.0f);
+        }
     }
 
     void EraseMsg(){
