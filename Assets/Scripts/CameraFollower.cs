@@ -6,10 +6,11 @@ public class CameraFollower : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform toFollow;
-    public Vector3 offsetOnX = new Vector3(0,30,-12);
-    public Vector3 offsetOnZ = new Vector3(0,30,-18);
+    public Vector3 offsetOnX = new Vector3(0,30,-1);
+    public Vector3 offsetOnZ = new Vector3(0,30,-8);
     public float speedZoomOut = 10f;
-    public float speedOffset = -15f;
+    public float speedOffsetX = -20f;
+    public float speedOffsetZ = -8f;
 
     PlayerController followedPlayer;
     Vector3 usedOffset;
@@ -27,7 +28,7 @@ public class CameraFollower : MonoBehaviour
     void Start()
     {
         // SeedManager.instance.debugStartGame(debugNumCars);
-        followedPlayer = toFollow.GetComponent<PlayerController>();
+        if (toFollow != null) followedPlayer = toFollow.GetComponent<PlayerController>();
         usedOffset = offsetOnX;
     }
 
@@ -39,16 +40,16 @@ public class CameraFollower : MonoBehaviour
             isGoingX = followedPlayer.speed > followedPlayer.reversedMaxSpeed;
             isGoingX = isGoingX && Mathf.Abs(followedPlayer.transform.forward.x) > Mathf.Abs(followedPlayer.transform.forward.z);
             if (isGoingX){
-                speedDrag = speedOffset*followedPlayer.speed/followedPlayer.maxSpeed;
-                usedSpeedDrag = Mathf.Lerp(usedSpeedDrag,speedDrag,0.1f);
+                speedDrag = speedOffsetX*followedPlayer.speed/followedPlayer.maxSpeed;
+                usedSpeedDrag = Mathf.Lerp(usedSpeedDrag,speedDrag,0.01f);
                 zoomOut = speedZoomOut*followedPlayer.speed/followedPlayer.maxSpeed;
                 nextPosition = toFollow.position+(speedDrag*toFollow.forward);
                 usedZoomOut = Mathf.Lerp(usedZoomOut,zoomOut,0.1f);
                 usedOffset = Vector3.Lerp(usedOffset,offsetOnX,0.02f);
             }
             else{
-                speedDrag = speedOffset*followedPlayer.speed/followedPlayer.maxSpeed;
-                usedSpeedDrag = Mathf.Lerp(usedSpeedDrag,speedDrag,0.1f);
+                speedDrag = speedOffsetZ*followedPlayer.speed/followedPlayer.maxSpeed;
+                usedSpeedDrag = Mathf.Lerp(usedSpeedDrag,speedDrag,0.01f);
                 zoomOut = speedZoomOut*followedPlayer.speed/followedPlayer.maxSpeed;
                 usedZoomOut = Mathf.Lerp(usedZoomOut,zoomOut,0.1f);
                 usedOffset = Vector3.Lerp(usedOffset,offsetOnZ,0.02f);
