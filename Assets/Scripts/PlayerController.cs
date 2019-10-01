@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public int seedCounter = 100;
     public int seedDrain = 1;
     public int stealCounter = 20;
+    public float killYLower = -10;
     int accelerator;
     int brake;
     float turn;
@@ -235,6 +236,12 @@ public class PlayerController : MonoBehaviour
         Quaternion deltaRotation = Quaternion.Euler(turn * steering * Time.deltaTime);
         body.MoveRotation(body.rotation * deltaRotation);
         body.MovePosition(newPosition);
+
+        //Check Y position
+        if(transform.position.y < killYLower)
+        {
+            SeedManager.instance.RemoveCar(id);
+        }
     }
 
     void OnBecameInvisible() {
