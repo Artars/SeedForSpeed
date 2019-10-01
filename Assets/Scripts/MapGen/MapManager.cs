@@ -8,9 +8,6 @@ public class MapManager : MonoBehaviour{
     public float offset; //distance between centers
     public int mainBlock = 12; //the index of the block who have the player on
 
-    public string[] bannedSequel1, bannedSequel2;
-    int bannedCount1 = 0, bannedCount2 = 0;
-
     public Block[] map; //the map centered on player
     // - -  -  - -
     // - NW N NE -

@@ -383,6 +383,14 @@ public class SeedManager : MonoBehaviour
 
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            if (isGamePlaying){
+                SceneManager.LoadScene(0);
+            }else{
+                Application.Quit();
+            }
+        }
+
         if(isGamePlaying && !gameOver)
         {
             int winningPlayer = -1;
