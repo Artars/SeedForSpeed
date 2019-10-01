@@ -251,6 +251,14 @@ MonoBehaviour:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  colorsName:
+  - Red
+  - Blue
+  - Yellow
+  - Green
+  - Pink
   cuckatielPrefab: {fileID: 9125251858700954091, guid: f66d5e0b87bceb247924fd8737b15abe,
     type: 3}
   cameraFollower: {fileID: 1898604242}
@@ -271,7 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawnForPlayer: {fileID: 9166475272431806727, guid: e29c2096dc24ddd4bb2c2065ab9d027e,
     type: 3}
-  maxPlayers: 0
+  maxPlayers: 20
   happyfuntimesOptions:
     controllerFilename: controllers/gamepad/controller.html
     name: 

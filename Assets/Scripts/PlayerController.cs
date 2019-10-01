@@ -210,7 +210,7 @@ public class PlayerController : MonoBehaviour
         if(animator != null)
         {
             animator.SetBool("Drifting", isDrifting && !isReversed);
-            animator.SetFloat("Steer", steering.y);
+            animator.SetFloat("Steer", turn);
         }
     }
 
@@ -256,7 +256,12 @@ public class PlayerController : MonoBehaviour
     {
         if(animator != null)
         {
+            Debug.Log("fudeu");
             animator.SetTrigger("Bump");
         }
+    }
+
+    public void ReleaseFeathers(){
+        //animator.SetTrigger("Feather");
     }
 }
