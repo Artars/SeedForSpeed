@@ -2911,16 +2911,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7180519344230251505}
     m_Modifications:
-    - target: {fileID: 6819406639307040172, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
-        type: 3}
-      propertyPath: m_Name
-      value: Lombada
-      objectReference: {fileID: 0}
-    - target: {fileID: 6819406639307040172, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6819406639306750348, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2991,6 +2981,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 6819406639307040172, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
+        type: 3}
+      propertyPath: m_Name
+      value: Lombada
+      objectReference: {fileID: 0}
+    - target: {fileID: 6819406639307040172, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b07bc7b66ec7ed4cb2338658878fb74, type: 3}
 --- !u!1 &5916802863773067588 stripped
@@ -3012,16 +3012,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7180519344230251505}
     m_Modifications:
-    - target: {fileID: 6819406639307040172, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
-        type: 3}
-      propertyPath: m_Name
-      value: Lombada (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6819406639307040172, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6819406639306750348, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3092,6 +3082,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 6819406639307040172, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
+        type: 3}
+      propertyPath: m_Name
+      value: Lombada (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6819406639307040172, guid: 2b07bc7b66ec7ed4cb2338658878fb74,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b07bc7b66ec7ed4cb2338658878fb74, type: 3}
 --- !u!1 &9053994175699384514 stripped
@@ -3122,6 +3122,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469663778252226475, guid: 5524cedc0707dc742a05257554e52bd5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4469663778251793291, guid: 5524cedc0707dc742a05257554e52bd5,
         type: 3}
@@ -3223,6 +3228,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469663778252226475, guid: 5524cedc0707dc742a05257554e52bd5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4469663778251793291, guid: 5524cedc0707dc742a05257554e52bd5,
         type: 3}

@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     public MeshRenderer carRenderer;
     public int materialIndex = 0;
     public Transform[] cuckatielPositions;
+    public GameObject trailReference;
 
     Vector3 steering;
     Transform bodyPosition;
@@ -217,6 +218,8 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Drifting", isDrifting && !isReversed);
             animator.SetFloat("Steer", turn);
         }
+
+        trailReference.SetActive(isDrifting);
     }
 
     void FixedUpdate()
