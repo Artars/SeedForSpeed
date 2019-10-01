@@ -273,6 +273,6 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ReleaseFeathers(){
-        //animator.SetTrigger("Feather");
+        animator.SetTrigger("Feather");
     }
 }

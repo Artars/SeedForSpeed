@@ -283,6 +283,11 @@ public class SeedManager : MonoBehaviour
         cars[id].carController.ReleaseFeathers();
     }
 
+    public void ScrambleCarPlacesBump(int id){
+        if (id > -1 && id < cars.Count) cars[id].RandomizePositions();
+        uIManager.teamCounter[id].ControlChange();
+    }
+
     public void StartGame()
     {
         if(isGamePlaying) return;
