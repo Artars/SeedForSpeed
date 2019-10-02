@@ -36,7 +36,7 @@ public class CarCollision : MonoBehaviour
             }
         }
         else if (contact.otherCollider.gameObject.tag != "Prop"){
-            if (Physics.Raycast(transform.position+new Vector3(0f,0.5f,0f),transform.forward,wallDistance,LayerMask.GetMask("Parede"))) {
+            if (Physics.Raycast(transform.position+new Vector3(0f,1.5f,0f),transform.forward,wallDistance,LayerMask.GetMask("Parede"))) {
                 shouldPlaySound = true;
                 movementControl.GetComponent<PlayerController>().stop();
                 if(SeedManager.instance != null) 
@@ -76,10 +76,10 @@ public class CarCollision : MonoBehaviour
         }
         int reverseNumber = movementControl.isReversed?-1:1;
         if (Vector3.Angle(reverseNumber*transform.forward,-contact.normal) > 10f) return;
-        if (Physics.Raycast(transform.position+new Vector3(0f,0.5f,0f),-transform.forward,wallDistance,LayerMask.GetMask("Parede"))){
+        if (Physics.Raycast(transform.position+new Vector3(0f,1.5f,0f),-transform.forward,wallDistance,LayerMask.GetMask("Parede"))){
             movementControl.stop();
         }
-        if (Physics.Raycast(transform.position+new Vector3(0f,0.5f,0f),transform.forward,wallDistance,LayerMask.GetMask("Parede"))){
+        if (Physics.Raycast(transform.position+new Vector3(0f,1.5f,0f),transform.forward,wallDistance,LayerMask.GetMask("Parede"))){
             movementControl.stop();
         }
     }
@@ -99,7 +99,7 @@ public class CarCollision : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawRay(transform.position+new Vector3(0f,0.5f,0f),transform.forward*wallDistance);
-        Gizmos.DrawRay(transform.position+new Vector3(0f,0.5f,0f),-transform.forward*wallDistance);
+        Gizmos.DrawRay(transform.position+new Vector3(0f,1.5f,0f),transform.forward*wallDistance);
+        Gizmos.DrawRay(transform.position+new Vector3(0f,1.5f,0f),-transform.forward*wallDistance);
     }
 }

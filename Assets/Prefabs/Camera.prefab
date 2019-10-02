@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toFollow: {fileID: 0}
-  offsetOnX: {x: 0, y: 30, z: -1}
+  offsetOnX: {x: 0, y: 30, z: -2}
   offsetOnZ: {x: 0, y: 30, z: -8}
   speedZoomOut: 10
   speedOffsetX: -20

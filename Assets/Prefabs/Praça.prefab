@@ -11,12 +11,15 @@ GameObject:
   - component: {fileID: 2978829768044449083}
   - component: {fileID: 2978829768043154715}
   - component: {fileID: 2978829768042155995}
-  - component: {fileID: 2978829768044058553}
-  - component: {fileID: 2978829768044058552}
-  - component: {fileID: 2978829768044058503}
-  - component: {fileID: 2978829768044058502}
-  - component: {fileID: 2978829768044058501}
-  - component: {fileID: 2978829768044058500}
+  - component: {fileID: 2646529126089687372}
+  - component: {fileID: 1701347613166146344}
+  - component: {fileID: 8210053594322231774}
+  - component: {fileID: 2490226600169458100}
+  - component: {fileID: 3729844570999053969}
+  - component: {fileID: 7928260648148382456}
+  - component: {fileID: 7058044007794127155}
+  - component: {fileID: 3803452233129762170}
+  - component: {fileID: 8635579901722324607}
   m_Layer: 0
   m_Name: "Pra\xE7a"
   m_TagString: Untagged
@@ -83,7 +86,85 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &2978829768044058553
+--- !u!65 &2646529126089687372
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978829768044155163}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.009, y: 0.009, z: 0.09}
+  m_Center: {x: 0.072, y: 0.072, z: 0.043683562}
+--- !u!65 &1701347613166146344
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978829768044155163}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.007, y: 0.008, z: 0.09}
+  m_Center: {x: 0.055, y: -0.045, z: 0.043683562}
+--- !u!65 &8210053594322231774
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978829768044155163}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.005, y: 0.006, z: 0.06}
+  m_Center: {x: 0.0975, y: -0.0745, z: 0.03}
+--- !u!65 &2490226600169458100
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978829768044155163}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.011, y: 0.01, z: 0.1}
+  m_Center: {x: -0.072, y: -0.073, z: 0.05}
+--- !u!65 &3729844570999053969
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978829768044155163}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: -0.008, y: 0.008, z: 0.09}
+  m_Center: {x: -0.078, y: 0.059, z: 0.043683562}
+--- !u!65 &7928260648148382456
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978829768044155163}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.006, y: 0.006, z: 0.06}
+  m_Center: {x: -0.0555, y: 0.106, z: 0.03}
+--- !u!136 &7058044007794127155
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,12 +174,12 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.025000002
-  m_Height: 0.091797404
+  m_Radius: 0.02
+  m_Height: 0.1
   m_Direction: 2
-  m_Center: {x: 0.07500009, y: 0.06500009, z: 0.039582334}
---- !u!136 &2978829768044058552
-CapsuleCollider:
+  m_Center: {x: 0, y: 0, z: 0.02}
+--- !u!65 &3803452233129762170
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -107,12 +188,11 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.018804125
-  m_Height: 0.07374314
-  m_Direction: 2
-  m_Center: {x: 0.05119587, y: -0.050000027, z: 0.030555423}
---- !u!136 &2978829768044058503
-CapsuleCollider:
+  serializedVersion: 2
+  m_Size: {x: 0.015, y: 0.014, z: 0.02}
+  m_Center: {x: -0.0078, y: 0.024, z: 0.01}
+--- !u!65 &8635579901722324607
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -121,49 +201,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.015
-  m_Height: 0.057046667
-  m_Direction: 2
-  m_Center: {x: 0.10000007, y: -0.07000014, z: 0.0222072}
---- !u!136 &2978829768044058502
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2978829768044155163}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.03436148
-  m_Height: 0.11732505
-  m_Direction: 2
-  m_Center: {x: -0.07, y: -0.08, z: 0.052346278}
---- !u!136 &2978829768044058501
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2978829768044155163}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.027742455
-  m_Height: 0.08116804
-  m_Direction: 2
-  m_Center: {x: -0.068713896, y: 0.060000062, z: 0.043171383}
---- !u!136 &2978829768044058500
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2978829768044155163}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.019426303
-  m_Height: 0.06977048
-  m_Direction: 2
-  m_Center: {x: -0.055000007, y: 0.108997636, z: 0.029640965}
+  serializedVersion: 2
+  m_Size: {x: 0.015, y: 0.014, z: 0.02}
+  m_Center: {x: 0.0078, y: -0.024, z: 0.01}

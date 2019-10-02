@@ -41,18 +41,18 @@ public class CameraFollower : MonoBehaviour
             isGoingX = isGoingX && Mathf.Abs(followedPlayer.transform.forward.x) > Mathf.Abs(followedPlayer.transform.forward.z);
             if (isGoingX){
                 speedDrag = speedOffsetX*followedPlayer.speed/followedPlayer.maxSpeed;
-                usedSpeedDrag = Mathf.Lerp(usedSpeedDrag,speedDrag,0.01f);
+                usedSpeedDrag = Mathf.Lerp(usedSpeedDrag,speedDrag,0.02f);
                 zoomOut = speedZoomOut*followedPlayer.speed/followedPlayer.maxSpeed;
                 nextPosition = toFollow.position+(speedDrag*toFollow.forward);
                 usedZoomOut = Mathf.Lerp(usedZoomOut,zoomOut,0.1f);
-                usedOffset = Vector3.Lerp(usedOffset,offsetOnX,0.02f);
+                usedOffset = Vector3.Lerp(usedOffset,offsetOnX,0.01f);
             }
             else{
                 speedDrag = speedOffsetZ*followedPlayer.speed/followedPlayer.maxSpeed;
-                usedSpeedDrag = Mathf.Lerp(usedSpeedDrag,speedDrag,0.01f);
+                usedSpeedDrag = Mathf.Lerp(usedSpeedDrag,speedDrag,0.02f);
                 zoomOut = speedZoomOut*followedPlayer.speed/followedPlayer.maxSpeed;
                 usedZoomOut = Mathf.Lerp(usedZoomOut,zoomOut,0.1f);
-                usedOffset = Vector3.Lerp(usedOffset,offsetOnZ,0.02f);
+                usedOffset = Vector3.Lerp(usedOffset,offsetOnZ,0.01f);
             }
             nextPosition = toFollow.position+(usedSpeedDrag*toFollow.forward);
             nextPosition += usedOffset;
