@@ -66,6 +66,29 @@ public class SeedPlayer : MonoBehaviour
 
     public void SetActions(PlayerActions action0, PlayerActions action1)
     {
+        foreach (var action in actions)
+        {
+            if((int) action.action < 4 && carController != null)
+            {
+                if(action.action == PlayerActions.Accelerator)
+                {
+                    carController.inputReceiveAccel(false);
+                }
+                else if(action.action == PlayerActions.Brake)
+                {
+                    carController.inputReceiveBrak(false);
+                }
+                else if(action.action == PlayerActions.Right)
+                {
+                    carController.inputReceiveRight(false);
+                }
+                else if(action.action == PlayerActions.Left)
+                {
+                    carController.inputReceiveLeft(false);
+                }
+            }
+        }
+
         actions[0].action = action0;
         actions[0].state = false;
 

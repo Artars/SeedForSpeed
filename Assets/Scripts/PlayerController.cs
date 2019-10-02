@@ -158,19 +158,25 @@ public class PlayerController : MonoBehaviour
     {
         if(loser) return;
         if (!forDebug && gamepadInput){
-            accelerator = 0;
-            brake = 0;
-            turn = 0;
-            if (Input.GetButton("Fire1")) acceleratorOn();
-            if (Input.GetButton("Fire2")) brakeOn();
-            if (Input.GetButton("Fire2") && accelerator == 0 && speed < 0.1) reverseOn();
-            // if (Input.GetKey(KeyCode.W)) acceleratorOn();
-            // if (Input.GetKey(KeyCode.S)) brakeOn();
-            // if (Input.GetKey(KeyCode.S) && accelerator == 0 && speed < 0.1) reverseOn();
-            float aux = Input.GetAxis("Horizontal");
-            if (aux>0) turnRight(aux);
-            else if (aux<0) turnLeft(aux);
-            if (brake == 0 && speed > -0.1) isReversed = false;
+            // accelerator = 0;
+            // brake = 0;
+            // turn = 0;
+            // if (Input.GetButton("Fire1")) acceleratorOn();
+            // if (Input.GetButton("Fire2")) brakeOn();
+            // if (Input.GetButton("Fire2") && accelerator == 0 && speed < 0.1) reverseOn();
+            // // if (Input.GetKey(KeyCode.W)) acceleratorOn();
+            // // if (Input.GetKey(KeyCode.S)) brakeOn();
+            // // if (Input.GetKey(KeyCode.S) && accelerator == 0 && speed < 0.1) reverseOn();
+            // float aux = Input.GetAxis("Horizontal");
+            // if (aux>0) turnRight(aux);
+            // else if (aux<0) turnLeft(aux);
+            // if (brake == 0 && speed > -0.1) isReversed = false;
+
+            //Make it equal to the other input
+            inputReceiveAccel(Input.GetButton("Fire1"));
+            inputReceiveBrak(Input.GetButton("Fire2"));
+            inputReceiveRight(Input.GetAxisRaw("Horizontal") > 0.2f);
+            inputReceiveLeft(Input.GetAxisRaw("Horizontal") < -0.2f);
         }
 
         isDrifting = (accelerator == 1 && brake == 1 && speed > 0.1);
