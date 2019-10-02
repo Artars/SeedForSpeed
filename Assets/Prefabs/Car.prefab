@@ -878,7 +878,8 @@ MonoBehaviour:
   loser: 0
   seedCounter: 100
   seedDrain: 1
-  stealCounter: 20
+  stealCounter: 5
+  killYLower: -10
   speed: 0
   slideSource: {fileID: 3945014575714906160}
   animator: {fileID: 5722481163482199787}
