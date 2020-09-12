@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     public GameObject teamPrefab;
     public Transform teamParent;
     public GameObject startScreenPanel;
+    public GameObject thirdPlayerCover;
+
 
     [Range(0,1)]
     public float alphaTeam = 0.8f;
@@ -55,13 +57,22 @@ public class UIManager : MonoBehaviour
 
     public void StartGame(List<SeedManager.CarConfiguration> controllers)
     {
+        int teamCount = controllers.Count;
+        startScreenPanel.SetActive(false);
+        thirdPlayerCover.SetActive(teamCount == 3);
         team = controllers;
         startScreenPanel.SetActive(false);
         teamParent.gameObject.SetActive(true);
 
         teamCounter.Clear();
 
-        for (int i = 0; i < controllers.Count; i++)
+        //Calculate screen pct
+        float widtDelta = (teamCount > 1) ? 0.5f : 1f;
+        int verticalCount = Mathf.CeilToInt(teamCount / 2f);
+        float heightDelta = 1.0f / verticalCount;
+
+
+        for (int i = 0; i < teamCount; i++)
         {
             GameObject toAssingn = GameObject.Instantiate(teamPrefab);
             //Image image = toAssingn.GetComponent<Image>();
@@ -75,6 +86,19 @@ public class UIManager : MonoBehaviour
             teamCounter.Add(i,label);
             toAssingn.SetActive(true);
             toAssingn.transform.SetParent(teamParent);
+
+            //Position calculation
+            int horizontalIndex = (i % 2);
+            int verticalIndex = Mathf.FloorToInt( (teamCount - i - 1) / 2f);
+            //Rect is defined by 4 points(corners) or by starting points and rect. The second one will be easier
+            float startingX = horizontalIndex * widtDelta;
+            float startingY = verticalIndex * heightDelta;
+
+            RectTransform rectTransform = toAssingn.GetComponent<RectTransform>();
+            rectTransform.anchorMin = new Vector2(startingX,startingY);
+            rectTransform.anchorMax = new Vector2(startingX + widtDelta, startingY + heightDelta);
+            rectTransform.offsetMin = Vector2.zero;
+            rectTransform.offsetMax = Vector2.zero;
         }
         isGamePlaying = true;
     }
@@ -88,6 +112,8 @@ public class UIManager : MonoBehaviour
                 if(team[i].carController != null)
                 {
                     teamCounter[i].label.text = team[i].carController.seedCounter.ToString();
+                    teamCounter[i].UpdateDanger(team[i].distancePct,team[i].dangerCounter);
+                    teamCounter[i].SetWinning(team[i].winning);
                 }
                 else
                 {

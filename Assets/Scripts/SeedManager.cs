@@ -14,7 +14,7 @@ public class SeedManager : MonoBehaviour
     public Color[] colors = new Color[] {Color.red,Color.blue,Color.yellow};
     public string[] colorsName = new string[] {"Red","Blue","Yellow"};
     public GameObject cuckatielPrefab;
-    public CameraFollower cameraFollower;
+    public CameraFollower cameraFollowerPrefab;
 
     public Transform pivot;
 
@@ -23,6 +23,7 @@ public class SeedManager : MonoBehaviour
     public AudioSource playerDeath;
 
     public float maxDistance;
+    public float maxTimeOutside;
 
     protected List<CarConfiguration> cars;
     public Transform initialPosition;
@@ -38,6 +39,10 @@ public class SeedManager : MonoBehaviour
         public string colorName;
         public List<SeedPlayer> players;
         public PlayerController carController;
+        public CameraFollower cameraFollower;
+        public float dangerCounter;
+        public float distancePct;
+        public bool winning = false;
         protected Dictionary<SeedPlayer.PlayerActions,SeedPlayer> assigmentPlayers;
         protected Dictionary<SeedPlayer, Cuckatiel> cuckatiels;
 
@@ -192,7 +197,7 @@ public class SeedManager : MonoBehaviour
     {
         players = new List<SeedPlayer>();
         cars = new List<CarConfiguration>();
-        cameraFollower.setTarget(initialPosition.transform);
+        // cameraFollower.setTarget(initialPosition.transform);
     }
 
     public void AddPlayer(SeedPlayer player)
@@ -301,7 +306,7 @@ public class SeedManager : MonoBehaviour
         int numCars = 1;
         if (players.Count > 1){
             numCars = Mathf.FloorToInt(players.Count/2.0f);
-            if (numCars > 5) numCars = 5;
+            if (numCars > 4) numCars = 4;
         }
 
         cars.Clear();
@@ -311,6 +316,8 @@ public class SeedManager : MonoBehaviour
         {
             InstantiateCar(i);
         }
+
+        InstantiateCameras(numCars);
 
         List<int>[] assigment = new List<int>[numCars];
         List<int> playersRemaining = new List<int>();
@@ -369,8 +376,33 @@ public class SeedManager : MonoBehaviour
         newConfiguration.id = index;
         newConfiguration.color = colors[index];
         newConfiguration.colorName = colorsName[index];
+        newConfiguration.dangerCounter = maxTimeOutside;
 
         cars.Add(newConfiguration);
+    }
+
+    protected void InstantiateCameras(int carsCount)
+    {
+        float widtDelta = (carsCount > 1) ? 0.5f : 1f;
+        int verticalCount = Mathf.CeilToInt(carsCount / 2f);
+        float heightDelta = 1.0f / verticalCount;
+
+        for (int i = 0; i < carsCount; i++)
+        {
+            CameraFollower currentCameraFollower = GameObject.Instantiate(cameraFollowerPrefab).GetComponent<CameraFollower>();
+            Camera currentCamera = currentCameraFollower.GetComponentInChildren<Camera>();
+            int horizontalIndex = (i % 2);
+            int verticalIndex = Mathf.FloorToInt( (carsCount-1-i) / 2f);
+
+            //Rect is defined by 4 points(corners) or by starting points and rect. The second one will be easier
+            float startingX = horizontalIndex * widtDelta;
+            float startingY = verticalIndex * heightDelta;
+            currentCamera.rect = new Rect(startingX ,startingY ,widtDelta, heightDelta);
+
+            currentCameraFollower.setTarget(cars[i].carController.transform);
+            cars[i].cameraFollower = currentCameraFollower;
+        }
+        
     }
 
     protected List<int> RandomizeArray(List<int> vector)
@@ -423,15 +455,33 @@ public class SeedManager : MonoBehaviour
             }
             if(winningPlayer != -1)
             {
-            cameraFollower.setTarget(cars[winningPlayer].carController.transform);
-            // follower.target = cars[winningPlayer].carController.transform;
-            pivot.position = cars[winningPlayer].carController.transform.position;
+                // cameraFollower.setTarget(cars[winningPlayer].carController.transform);
+                // follower.target = cars[winningPlayer].carController.transform;
+                pivot.position = cars[winningPlayer].carController.transform.position;
 
-            for (int i = 0; i < cars.Count; i++)
-            {
-                if ((cars[i].carController.transform.position - cars[winningPlayer].carController.transform.position).magnitude > maxDistance)
-                    RemoveCar(i);
-            }
+                Vector3 winningPosition = cars[winningPlayer].carController.transform.position;
+
+                for (int i = 0; i < cars.Count; i++)
+                {
+                    if(cars[i].carController == null) continue;
+                    //Update winning
+                    cars[i].winning = (i == winningPlayer);
+
+                    //Update distance and lose conditions
+                    float distance = (cars[i].carController.transform.position - winningPosition).magnitude;
+                    cars[i].distancePct = distance / maxDistance;
+                    if(cars[i].distancePct >= 1.0f)
+                    {
+                        cars[i].dangerCounter -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        cars[i].dangerCounter += Time.deltaTime;
+                    }
+                    cars[i].dangerCounter = Mathf.Clamp(cars[i].dangerCounter,0, maxTimeOutside);
+                    if(cars[i].dangerCounter <= 0)
+                        RemoveCar(i);
+                }
 
             }
         }

@@ -262,11 +262,13 @@ MonoBehaviour:
   - Pink
   cuckatielPrefab: {fileID: 9125251858700954091, guid: f66d5e0b87bceb247924fd8737b15abe,
     type: 3}
-  cameraFollower: {fileID: 2100518816}
+  cameraFollowerPrefab: {fileID: 3572106671092208588, guid: 581fbf70e62b75946937552b3bcc10f6,
+    type: 3}
   pivot: {fileID: 1434714342}
   uIManager: {fileID: 1148692133}
   playerDeath: {fileID: 610603394}
-  maxDistance: 38
+  maxDistance: 50
+  maxTimeOutside: 10
   initialPosition: {fileID: 408034323}
 --- !u!114 &610603392
 MonoBehaviour:
@@ -606,6 +608,61 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7229158561512792481, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158560217665923, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158561512792480, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158561512792480, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158561512792480, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 394
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158561512792480, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 788
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158561512792480, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -44.300003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158561512792480, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 88.600006
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158560443506913, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158560443506913, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229158560443506913, guid: 9959ef21ed3e2b247a5a39956593c0a7,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -283.72
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9959ef21ed3e2b247a5a39956593c0a7, type: 3}
 --- !u!114 &1148692133 stripped
@@ -876,6 +933,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5532870435674239569, guid: 581fbf70e62b75946937552b3bcc10f6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5485579193100008759, guid: 581fbf70e62b75946937552b3bcc10f6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -933,15 +995,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 581fbf70e62b75946937552b3bcc10f6, type: 3}
---- !u!114 &2100518816 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3572106671092208588, guid: 581fbf70e62b75946937552b3bcc10f6,
-    type: 3}
-  m_PrefabInstance: {fileID: 2100518815}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c83fbb400427cc34cbbc890397284001, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
