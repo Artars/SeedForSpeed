@@ -61,6 +61,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 91644c3ce67316c45be0d41911703ae1, type: 3}
   - {fileID: 8300000, guid: 59c0573ab856d19408a267dd2bc85e24, type: 3}
   - {fileID: 8300000, guid: fa81b392ed147c341afe016e8ff745a2, type: 3}
+  carId: -1
+  cuckatielCount: 7
+  cuckatID: 0
+  cuckatiel: {fileID: 0}
 --- !u!114 &9166475272431806726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,7 +108,8 @@ AudioSource:
   m_GameObject: {fileID: 9166475272431806727}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243463701833730622, guid: a5171ed802cf912448640a2b7c685faa,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
